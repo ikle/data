@@ -1,13 +1,13 @@
 /*
- * Sequence: List or Stack
+ * Sequence: list, queue or stack
  *
- * Copyright (c) 2014 Alexei A. Smekalkine
+ * Copyright (c) 2014-2017 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef SEQ_H
-#define SEQ_H  1
+#ifndef DATA_SEQ_H
+#define DATA_SEQ_H  1
 
 #include <assert.h>
 #include <stddef.h>
@@ -47,8 +47,10 @@ static inline void type##_seq_push (struct type##_seq *s,		\
 	assert (i->next == NULL);					\
 									\
 	i->next = s->head;						\
+									\
 	if (s->head == NULL)						\
 		s->tail = &i->next;					\
+									\
 	s->head = i;							\
 }									\
 									\
@@ -92,4 +94,4 @@ static inline int type##_seq_is_empty (struct type##_seq *s)		\
 	return s->head == NULL;						\
 }
 
-#endif  /* SEQ_H */
+#endif  /* DATA_SEQ_H */
