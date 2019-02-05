@@ -44,29 +44,51 @@ static void show_escaped (const char *s, FILE *to)
 	fputc ('"', to);
 }
 
-void se_show (struct se *o, FILE *to)
+static int se_show_list (struct se *o, FILE *to)
 {
-	if (se_is_atom (o)) {
-		show_escaped (se_atom_name (o), to);
-		return;
-	}
+	struct se *p;
+
+	for (p = o; !se_is_atom (p); p = se_to_pair (p)->tail) {}
+
+	if (p != NULL)
+		return 0;
 
 	fputs ("(", to);
 
-	for (;;) {
-		se_show (se_to_pair (o)->head, to);
+	if (o != NULL)
+		for (;;) {
+			se_show (se_to_pair (o)->head, to);
 
-		if ((o = se_to_pair (o)->tail) == NULL)
-			break;
+			if ((o = se_to_pair (o)->tail) == NULL)
+				break;
 
-		fputc (' ', to);
-
-		if (se_is_atom (o)) {
-			fputs (". ", to);
-			se_show (o, to);
-			break;
+			fputc (' ', to);
 		}
-	}
+
+	fputs (")", to);
+
+	return 1;
+}
+
+static int se_show_atom (struct se *o, FILE *to)
+{
+	if (!se_is_atom (o))
+		return 0;
+
+	show_escaped (se_atom_name (o), to);
+	return 1;
+}
+
+void se_show (struct se *o, FILE *to)
+{
+	if (se_show_list (o, to) || se_show_atom (o, to))
+		return;
+
+	fputs ("(", to);
+
+	se_show (se_to_pair (o)->head, to);
+	fputs (" . ", to);
+	se_show (se_to_pair (o)->tail, to);
 
 	fputs (")", to);
 }
