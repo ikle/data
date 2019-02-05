@@ -62,6 +62,7 @@ void se_show (struct se *o, FILE *to)
 		fputc (' ', to);
 
 		if (se_is_atom (o)) {
+			fputs (". ", to);
 			se_show (o, to);
 			break;
 		}
