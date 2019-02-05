@@ -66,6 +66,10 @@ static void test_pairs (void)
 	se_show (o, stdout);
 	printf ("\n");
 
+	o = se_pair (NULL, o);
+	se_show (o, stdout);
+	printf ("\n");
+
 	se_free (o);
 	se_scope_free (s);
 }
