@@ -1,4 +1,4 @@
-LIBNAME	= data
+LIBNAME	= ikle-data
 LIBVER	= 0
 LIBREV	= 0.1
 
