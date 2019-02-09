@@ -1,7 +1,7 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015 Alexei A. Smekalkine
+ * Copyright (c) 2015,2019 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -23,8 +23,9 @@ struct bh {
    nonzero if object a has higher priority over object b */
 void bh_init (struct bh *bh, int (*cmp) (void *a, void *b));
 
-/* free all internal objects */
-void bh_fini (struct bh *bh);
+/* free all internal objects, call destructor (if not NULL) for each
+   contained object */
+void bh_fini (struct bh *bh, void (*item_free) (void *o));
 
 /* returns object with higher priority in head */
 void *bh_top (struct bh *bh);

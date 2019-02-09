@@ -1,7 +1,7 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015 Alexei A. Smekalkine
+ * Copyright (c) 2015,2019 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -25,8 +25,14 @@ void bh_init (struct bh *bh, int (*cmp) (void *a, void *b))
 	bh->pool = NULL;
 }
 
-void bh_fini (struct bh *bh)
+void bh_fini (struct bh *bh, void (*item_free) (void *o))
 {
+	size_t i;
+
+	if (item_free != NULL)
+		for (i = 0; i < bh->tail; ++i)
+			item_free (bh->pool[i]);
+
 	free (bh->pool);
 }
 
