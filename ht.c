@@ -133,3 +133,14 @@ int ht_insert (struct ht *ht, void *o)
 	ht->table[i] = o;
 	return 1;
 }
+
+void ht_remove (struct ht *ht, const void *o)
+{
+	size_t i = ht_index (ht, o);
+
+	if (ht->table[i] == NULL)
+		return;
+
+	ht->type->free (ht->table[i]);
+	ht->table[i] = NULL;
+}

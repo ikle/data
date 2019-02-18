@@ -1,7 +1,7 @@
 /*
  * Opening Addressing Hash Table
  *
- * Copyright (c) 2017 Alexei A. Smekalkine
+ * Copyright (c) 2017,2019 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -26,6 +26,7 @@ size_t ht_hash (const void *o);
 size_t ht_index (const struct ht *ht, const void *o);
 void *ht_lookup (const struct ht *ht, const void *o);
 int ht_insert (struct ht *ht, void *o);
+void ht_remove (struct ht *ht, const void *o);
 
 #define ht_foreach(i, o, ht)				\
 	for ((i) = 0; (i) < (ht)->size; ++(i))		\
