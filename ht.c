@@ -115,7 +115,7 @@ static int resize (struct ht *ht)
 	return 1;
 }
 
-int ht_insert (struct ht *ht, void *o)
+int ht_insert (struct ht *ht, void *o, int replace)
 {
 	size_t i;
 
@@ -125,8 +125,12 @@ int ht_insert (struct ht *ht, void *o)
 	i = ht_index (ht, o);
 
 	if (ht->table[i] != NULL) {
-		errno = EEXIST;
-		return 0;
+		if (!replace) {
+			errno = EEXIST;
+			return 0;
+		}
+
+		ht->type->free (ht->table[i]);
 	}
 
 	++ht->count;

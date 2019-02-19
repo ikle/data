@@ -59,7 +59,7 @@ struct se *se_atom (struct se_scope *scope, const char *name)
 	if ((o = strdup (name)) == NULL)
 		goto no_object;
 
-	if (!ht_insert (&scope->table, o))
+	if (!ht_insert (&scope->table, o, 0))
 		goto no_insert;
 
 	return name_to_atom (o);
