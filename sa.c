@@ -15,6 +15,8 @@
 #define REST(order)		((1 << (order)) - 1)
 #define ALIGN(x, order)		(((x) + REST (order)) & ~REST (order))
 
+#define BLOCK_SIZE		BUFSIZ
+
 struct sa_block {
 	struct sa_block *next;
 	char data[8];
@@ -24,7 +26,7 @@ static struct sa_block *alloc_block (struct sa_pool *o)
 {
 	struct sa_block *p;
 
-	if ((p = malloc (o->size)) == NULL)
+	if ((p = malloc (BLOCK_SIZE)) == NULL)
 		return NULL;
 
 	p->next = NULL;
@@ -35,12 +37,12 @@ static int expand (struct sa_pool *o, size_t size)
 {
 	size_t start;
 
-	if ((o->end + size) < o->size)
+	if ((o->end + size) < BLOCK_SIZE)
 		return 1;
 
 	start = ALIGN (offsetof (struct sa_block, data), o->order);
 
-	if ((start + size) > o->size) {
+	if ((start + size) > BLOCK_SIZE) {
 		errno = EINVAL;
 		return 0;
 	}
@@ -53,14 +55,8 @@ static int expand (struct sa_pool *o, size_t size)
 	return 1;
 }
 
-int sa_pool_init (struct sa_pool *o, size_t size, int order)
+int sa_pool_init (struct sa_pool *o, int order)
 {
-	if (size < sizeof (*o->head)) {
-		errno = EINVAL;
-		return 0;
-	}
-
-	o->size  = size == 0 ? BUFSIZ : size;
 	o->order = order < 0 ? 3 : order;
 
 	o->head = o->tail = alloc_block (o);
