@@ -49,7 +49,7 @@ static int expand (struct sa_pool *o, size_t size)
 	start = ALIGN (offsetof (struct sa_block, data), o->order);
 
 	if ((start + size) > BLOCK_SIZE) {
-		errno = EINVAL;
+		errno = EOVERFLOW;
 		return 0;
 	}
 
