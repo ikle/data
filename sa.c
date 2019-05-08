@@ -33,6 +33,12 @@ static struct sa_block *alloc_block (struct sa_pool *o)
 	return p;
 }
 
+struct sa_pool {
+	struct sa_block *head, *tail;
+	size_t end;
+	unsigned order;
+};
+
 static int expand (struct sa_pool *o, size_t size)
 {
 	size_t start;
@@ -55,24 +61,40 @@ static int expand (struct sa_pool *o, size_t size)
 	return 1;
 }
 
-int sa_pool_init (struct sa_pool *o, int order)
+struct sa_pool *sa_pool_alloc (int order)
 {
+	struct sa_pool *o;
+
+	if ((o = malloc (sizeof (*o))) == NULL)
+		return NULL;
+
+	if ((o->head = alloc_block (o)) == NULL)
+		goto no_block;
+
 	o->order = order < 0 ? 3 : order;
 
-	o->head = o->tail = alloc_block (o);
+	o->tail = o->head;
 	o->end = ALIGN (offsetof (struct sa_block, data), o->order);
 
-	return o->head != NULL;
+	return o;
+no_block:
+	free (o);
+	return NULL;
 }
 
-void sa_pool_fini (struct sa_pool *o)
+void sa_pool_free (struct sa_pool *o)
 {
 	struct sa_block *p, *next;
+
+	if (o == NULL)
+		return;
 
 	for (p = o->head; p != NULL; p = next) {
 		next = p->next;
 		free (p);
 	}
+
+	free (o);
 }
 
 void *sa_alloc (struct sa_pool *o, size_t size)
