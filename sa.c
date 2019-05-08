@@ -12,6 +12,12 @@
 
 #include <data/sa.h>
 
+#ifdef __BIGGEST_ALIGNMENT__
+#define DEF_ALIGNMENT	__BIGGEST_ALIGNMENT__
+#else
+#define DEF_ALIGNMENT	sizeof (long double)
+#endif
+
 #define ALIGN(x, mask)		(((x) + mask) & ~mask)
 
 #define BLOCK_SIZE		BUFSIZ
@@ -64,7 +70,7 @@ struct sa_pool *sa_pool_alloc (unsigned align)
 	struct sa_pool *o;
 
 	if (align == 0)
-		align = sizeof (long double);
+		align = DEF_ALIGNMENT;
 
 	if ((align & (align - 1)) != 0) {  /* align MUST be power of two */
 		errno = EINVAL;
