@@ -12,8 +12,7 @@
 
 #include <data/sa.h>
 
-#define REST(order)		((1 << (order)) - 1)
-#define ALIGN(x, order)		(((x) + REST (order)) & ~REST (order))
+#define ALIGN(x, mask)		(((x) + mask) & ~mask)
 
 #define BLOCK_SIZE		BUFSIZ
 
@@ -35,8 +34,7 @@ static struct sa_block *alloc_block (void)
 
 struct sa_pool {
 	struct sa_block *head, *tail;
-	size_t end;
-	unsigned order;
+	size_t end, mask;
 };
 
 static int expand (struct sa_pool *o, size_t size)
@@ -46,7 +44,7 @@ static int expand (struct sa_pool *o, size_t size)
 	if ((o->end + size) < BLOCK_SIZE)
 		return 1;
 
-	start = ALIGN (offsetof (struct sa_block, data), o->order);
+	start = ALIGN (offsetof (struct sa_block, data), o->mask);
 
 	if ((start + size) > BLOCK_SIZE) {
 		errno = EOVERFLOW;
@@ -61,9 +59,17 @@ static int expand (struct sa_pool *o, size_t size)
 	return 1;
 }
 
-struct sa_pool *sa_pool_alloc (int order)
+struct sa_pool *sa_pool_alloc (unsigned align)
 {
 	struct sa_pool *o;
+
+	if (align == 0)
+		align = sizeof (long double);
+
+	if ((align & (align - 1)) != 0) {  /* align MUST be power of two */
+		errno = EINVAL;
+		return NULL;
+	}
 
 	if ((o = malloc (sizeof (*o))) == NULL)
 		return NULL;
@@ -71,10 +77,10 @@ struct sa_pool *sa_pool_alloc (int order)
 	if ((o->head = alloc_block ()) == NULL)
 		goto no_block;
 
-	o->order = order < 0 ? 3 : order;
+	o->mask = align - 1;
 
 	o->tail = o->head;
-	o->end = ALIGN (offsetof (struct sa_block, data), o->order);
+	o->end = ALIGN (offsetof (struct sa_block, data), o->mask);
 
 	return o;
 no_block:
@@ -105,7 +111,7 @@ void *sa_alloc (struct sa_pool *o, size_t size)
 		return NULL;
 
 	p = (char *) o->tail + o->end;
-	o->end = ALIGN (o->end + size, o->order);
+	o->end = ALIGN (o->end + size, o->mask);
 
 	return p;
 }
