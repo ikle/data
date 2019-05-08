@@ -22,7 +22,7 @@ struct sa_block {
 	char data[8];
 };
 
-static struct sa_block *alloc_block (struct sa_pool *o)
+static struct sa_block *alloc_block (void)
 {
 	struct sa_block *p;
 
@@ -53,7 +53,7 @@ static int expand (struct sa_pool *o, size_t size)
 		return 0;
 	}
 
-	if (o->tail->next == NULL && (o->tail->next = alloc_block (o)) == NULL)
+	if (o->tail->next == NULL && (o->tail->next = alloc_block ()) == NULL)
 		return 0;
 
 	o->tail = o->tail->next;
@@ -68,7 +68,7 @@ struct sa_pool *sa_pool_alloc (int order)
 	if ((o = malloc (sizeof (*o))) == NULL)
 		return NULL;
 
-	if ((o->head = alloc_block (o)) == NULL)
+	if ((o->head = alloc_block ()) == NULL)
 		goto no_block;
 
 	o->order = order < 0 ? 3 : order;
