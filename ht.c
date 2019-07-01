@@ -148,3 +148,13 @@ void ht_remove (struct ht *ht, const void *o)
 	ht->type->free (ht->table[i]);
 	ht->table[i] = NULL;
 }
+
+void ht_clean (struct ht *ht)
+{
+	size_t i;
+
+	ht_fini (ht);
+
+	for (i = 0; i < ht->size; ++i)
+		ht->table[i] = NULL;
+}

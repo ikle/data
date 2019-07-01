@@ -27,6 +27,7 @@ size_t ht_index (const struct ht *ht, const void *o);
 void *ht_lookup (const struct ht *ht, const void *o);
 int ht_insert (struct ht *ht, void *o, int replace);
 void ht_remove (struct ht *ht, const void *o);
+void ht_clean (struct ht *ht);
 
 #define ht_foreach(i, o, ht)				\
 	for ((i) = 0; (i) < (ht)->size; ++(i))		\
