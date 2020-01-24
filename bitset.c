@@ -40,7 +40,7 @@ int bitset_is_member (const struct bitset *o, size_t x)
 	if (pos >= o->count)
 		return 0;
 
-	return (o->set[pos] | (1UL << bit)) != 0;
+	return (o->set[pos] & (1UL << bit)) != 0;
 }
 
 static int bitset_prepare (struct bitset *o, size_t count)
