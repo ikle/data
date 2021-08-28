@@ -47,7 +47,7 @@ static int expand (struct sa_pool *o, size_t size)
 {
 	size_t start;
 
-	if ((o->end + size) < BLOCK_SIZE)
+	if ((o->end + size) <= BLOCK_SIZE)
 		return 1;
 
 	start = ALIGN (offsetof (struct sa_block, data), o->mask);
