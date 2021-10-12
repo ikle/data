@@ -79,6 +79,7 @@ static inline struct type *type##_seq_pop (struct type##_seq *s)	\
 	if (s->head == NULL)						\
 		s->tail = &s->head;					\
 									\
+	i->next = NULL;							\
 	return i;							\
 }									\
 									\
