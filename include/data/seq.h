@@ -1,7 +1,7 @@
 /*
  * Sequence: list, queue or stack
  *
- * Copyright (c) 2014-2017 Alexei A. Smekalkine
+ * Copyright (c) 2014-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -44,7 +44,7 @@ static inline void type##_seq_move (struct type##_seq *from,		\
 				    void (*f) (struct type *))		\
 {									\
 	assert (from != NULL);						\
-	assert (to != NULL);						\
+	assert (to   != NULL);						\
 									\
 	type##_seq_fini (to, f);					\
 	to->head = from->head;						\
