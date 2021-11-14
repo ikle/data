@@ -1,7 +1,7 @@
 /*
  * Data Type
  *
- * Copyright (c) 2017 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -13,7 +13,7 @@
 
 struct data_type {
 	void (*free) (void *o);
-	int (*eq) (const void *a, const void *b);
+	int (*eq) (const void *o, const void *sample);
 	size_t (*hash) (const void *o);
 };
 

@@ -1,7 +1,7 @@
 /*
  * String Type
  *
- * Copyright (c) 2017 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -11,7 +11,7 @@
 
 #include <data/type.h>
 
-int string_eq (const void *a, const void *b);
+int string_eq (const void *o, const void *sample);
 size_t string_hash (const void *o);
 
 #endif  /* DATA_STRING_H */

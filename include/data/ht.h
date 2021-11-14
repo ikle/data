@@ -1,7 +1,7 @@
 /*
  * Opening Addressing Hash Table
  *
- * Copyright (c) 2017,2019 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -20,7 +20,7 @@ struct ht {
 int  ht_init (struct ht *ht, const struct data_type *type);
 void ht_fini (struct ht *ht);
 
-int ht_eq (const void *a, const void *b);
+int ht_eq (const void *o, const void *sample);
 size_t ht_hash (const void *o);
 
 size_t ht_index (const struct ht *ht, const void *o);
