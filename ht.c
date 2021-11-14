@@ -132,8 +132,9 @@ int ht_insert (struct ht *ht, void *o, int replace)
 
 		ht->type->free (ht->table[i]);
 	}
+	else
+		++ht->count;
 
-	++ht->count;
 	ht->table[i] = o;
 	return 1;
 }
@@ -147,6 +148,7 @@ void ht_remove (struct ht *ht, const void *o)
 
 	ht->type->free (ht->table[i]);
 	ht->table[i] = NULL;
+	--ht->count;
 }
 
 void ht_clean (struct ht *ht)
