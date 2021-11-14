@@ -1,5 +1,5 @@
 /*
- * Dynamic Array
+ * Colibri Dynamic Array
  *
  * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *

@@ -1,7 +1,7 @@
 /*
- * Dynamic Array
+ * Colibri Dynamic Array
  *
- * Copyright (c) 2017 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -13,14 +13,11 @@
 
 int da_init (struct da *da, const struct data_type *type)
 {
-	da->size = 2;
-
-	if ((da->table = calloc (da->size, sizeof (da->table[0]))) == NULL)
-		return 0;
-
 	da->type  = type;
 	da->count = 0;
-	return 1;
+	da->size  = 2;
+
+	return (da->table = calloc (da->size, sizeof (da->table[0]))) != NULL;
 }
 
 void da_fini (struct da *da)
