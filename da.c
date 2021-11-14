@@ -49,7 +49,7 @@ static int resize (struct da *da)
 	return 1;
 }
 
-int da_insert (struct da *da, void *o)
+int da_add (struct da *da, void *o)
 {
 	if (!resize (da))
 		return 0;

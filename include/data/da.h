@@ -20,6 +20,6 @@ struct da {
 int  da_init (struct da *da, const struct data_type *type);
 void da_fini (struct da *da);
 
-int da_insert (struct da *da, void *o);
+int da_add (struct da *da, void *o);
 
 #endif  /* COLIBRI_DATA_DA_H */
