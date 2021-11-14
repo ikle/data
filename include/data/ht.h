@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_HT_H
-#define DATA_HT_H  1
+#ifndef COLIBRI_DATA_HT_H
+#define COLIBRI_DATA_HT_H  1
 
 #include <data/type.h>
 
@@ -33,4 +33,4 @@ void ht_clean (struct ht *ht);
 	for ((i) = 0; (i) < (ht)->size; ++(i))		\
 		if (((o) = (ht)->table[i]) != NULL)
 
-#endif  /* DATA_HT_H */
+#endif  /* COLIBRI_DATA_HT_H */

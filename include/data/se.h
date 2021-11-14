@@ -1,13 +1,13 @@
 /*
  * S-Expressions
  *
- * Copyright (c) 2019 Alexei A. Smekalkine
+ * Copyright (c) 2019-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_SE_H
-#define DATA_SE_H  1
+#ifndef COLIBRI_DATA_SE_H
+#define COLIBRI_DATA_SE_H  1
 
 #include <data/type.h>
 
@@ -25,4 +25,4 @@ void se_free (struct se *o);
 
 void se_show (struct se *o, FILE *to);
 
-#endif  /* DATA_SE_H */
+#endif  /* COLIBRI_DATA_SE_H */

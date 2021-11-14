@@ -1,13 +1,13 @@
 /*
  * S-Expressions, internals
  *
- * Copyright (c) 2019 Alexei A. Smekalkine
+ * Copyright (c) 2019-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_SE_INT_H
-#define DATA_SE_INT_H  1
+#ifndef COLIBRI_DATA_SE_INT_H
+#define COLIBRI_DATA_SE_INT_H  1
 
 #include <data/se.h>
 
@@ -45,4 +45,4 @@ static inline struct se_pair *se_to_pair (struct se *o)
 	return (void *) o;
 }
 
-#endif  /* DATA_SE_INT_H */
+#endif  /* COLIBRI_DATA_SE_INT_H */

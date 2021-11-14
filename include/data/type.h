@@ -6,8 +6,8 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_TYPE_H
-#define DATA_TYPE_H  1
+#ifndef COLIBRI_DATA_TYPE_H
+#define COLIBRI_DATA_TYPE_H  1
 
 #include <stddef.h>
 
@@ -17,4 +17,4 @@ struct data_type {
 	size_t (*hash) (size_t iv, const void *o);
 };
 
-#endif  /* DATA_TYPE_H */
+#endif  /* COLIBRI_DATA_TYPE_H */

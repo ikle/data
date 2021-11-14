@@ -1,13 +1,13 @@
 /*
  * Compact Binary Set
  *
- * Copyright (c) 2007-2017,2019 Alexei A. Smekalkine
+ * Copyright (c) 2007-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_BITSET_H
-#define DATA_BITSET_H  1
+#ifndef COLIBRI_DATA_BITSET_H
+#define COLIBRI_DATA_BITSET_H  1
 
 #include <stdint.h>
 #include <stdlib.h>
@@ -47,4 +47,4 @@ int bitset_join (struct bitset *o, const struct bitset *s);
 /* o = o \ s */
 int bitset_diff (struct bitset *o, const struct bitset *s);
 
-#endif  /* DATA_BITSET_H */
+#endif  /* COLIBRI_DATA_BITSET_H */

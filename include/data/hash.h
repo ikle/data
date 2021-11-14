@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_HASH_H
-#define DATA_HASH_H  1
+#ifndef COLIBRI_DATA_HASH_H
+#define COLIBRI_DATA_HASH_H  1
 
 #include <stddef.h>
 
 size_t hash (size_t iv, const void *data, size_t size);
 
-#endif  /* DATA_HASH_H */
+#endif  /* COLIBRI_DATA_HASH_H */

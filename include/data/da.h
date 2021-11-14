@@ -1,13 +1,13 @@
 /*
  * Dynamic Array
  *
- * Copyright (c) 2017 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_DA_H
-#define DATA_DA_H  1
+#ifndef COLIBRI_DATA_DA_H
+#define COLIBRI_DATA_DA_H  1
 
 #include <data/type.h>
 
@@ -22,4 +22,4 @@ void da_fini (struct da *da);
 
 int da_insert (struct da *da, void *o);
 
-#endif  /* DATA_DA_H */
+#endif  /* COLIBRI_DATA_DA_H */

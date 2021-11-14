@@ -1,13 +1,13 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015,2019 Alexei A. Smekalkine
+ * Copyright (c) 2015-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef DATA_BH_H
-#define DATA_BH_H  1
+#ifndef COLIBRI_DATA_BH_H
+#define COLIBRI_DATA_BH_H  1
 
 #include <stddef.h>
 
@@ -44,4 +44,4 @@ int bh_push (struct bh *bh, void *x);
 /* commit all pending objects and remove top object from heap */
 void *bh_pop (struct bh *bh);
 
-#endif  /* DATA_BH_H */
+#endif  /* COLIBRI_DATA_BH_H */
