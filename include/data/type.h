@@ -14,7 +14,7 @@
 struct data_type {
 	void (*free) (void *o);
 	int (*eq) (const void *o, const void *sample);
-	size_t (*hash) (const void *o);
+	size_t (*hash) (size_t iv, const void *o);
 };
 
 #endif  /* DATA_TYPE_H */

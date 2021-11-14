@@ -1,7 +1,7 @@
 /*
  * Opening Addressing Hash Table
  *
- * Copyright (c) 2017,2019 Alexei A. Smekalkine
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -36,18 +36,18 @@ void ht_fini (struct ht *ht)
 		ht->type->free (ht->table[i]);
 }
 
-size_t ht_hash (const void *o)
+size_t ht_hash (size_t iv, const void *o)
 {
 	const struct ht *p = o;
-	size_t state = 0, i;
+	size_t i;
 	void *item;
 
 	/* NOTE: we need to calculate order-independed hash from items */
 
 	ht_foreach (i, item, p)
-		state += p->type->hash (item);
+		iv = p->type->hash (iv, item);
 
-	return state;
+	return iv;
 }
 
 int ht_eq (const void *a, const void *b)
@@ -74,7 +74,7 @@ static size_t get_slot (const struct data_type *type, size_t size,
 	size_t i;
 
 	for (
-		i = type->hash (o) & mask;
+		i = type->hash (0, o) & mask;
 		table[i] != NULL && !type->eq (table[i], o);
 		i = (i + 1) & mask
 	) {}

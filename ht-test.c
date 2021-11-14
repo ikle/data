@@ -1,3 +1,11 @@
+/*
+ * Opening Addressing Hash Table test
+ *
+ * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
+
 #include <err.h>
 #include <stdio.h>
 
@@ -10,7 +18,7 @@ static const struct data_type string_type = {
 	.eq	= string_eq,
 };
 
-static size_t string_bad_hash (const void *o)
+static size_t string_bad_hash (size_t iv, const void *o)
 {
 	return *(const char *) o;  /* bad hash to test collisions */
 }
@@ -20,7 +28,7 @@ static const struct data_type string_bad_type = {
 	.eq	= string_eq,
 };
 
-static size_t string_very_bad_hash (const void *o)
+static size_t string_very_bad_hash (size_t iv, const void *o)
 {
 	return 0;  /* very bad hash to test collisions */
 }
@@ -61,7 +69,7 @@ static void do_test (const struct data_type *type)
 	for (i = 0; i < ht.size; ++i)
 		if (ht.table[i] != NULL)
 			printf ("%2zu at %2zu: %s\n",
-				type->hash (ht.table[i]) & (ht.size - 1), i,
+				type->hash (0, ht.table[i]) & (ht.size - 1), i,
 				(const char *) ht.table[i]);
 
 	ht_fini (&ht);

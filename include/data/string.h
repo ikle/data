@@ -12,6 +12,6 @@
 #include <data/type.h>
 
 int string_eq (const void *o, const void *sample);
-size_t string_hash (const void *o);
+size_t string_hash (size_t iv, const void *o);
 
 #endif  /* DATA_STRING_H */

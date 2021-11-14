@@ -16,7 +16,7 @@ int string_eq (const void *a, const void *b)
 	return strcmp (a, b) == 0;
 }
 
-size_t string_hash (const void *o)
+size_t string_hash (size_t iv, const void *o)
 {
-	return hash (0, o, strlen (o));
+	return hash (iv, o, strlen (o));
 }
