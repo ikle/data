@@ -13,7 +13,7 @@
 #include <data/ht.h>
 #include <data/string.h>
 
-static const struct data_type string_type = {
+static const struct data_type string_good_type = {
 	.hash	= string_hash,
 	.eq	= string_eq,
 };
@@ -78,7 +78,7 @@ static void do_test (const struct data_type *type)
 int main (int argc, char *argv[])
 {
 	printf ("With data/hash:\n\n");
-	do_test (&string_type);
+	do_test (&string_good_type);
 
 	printf ("\nWith bad hash (value of first character):\n\n");
 	do_test (&string_bad_type);

@@ -18,12 +18,6 @@ struct se_scope {
 	struct ht table;
 };
 
-static const struct data_type string_type = {
-	.hash	= string_hash,
-	.eq	= string_eq,
-	.free	= free,
-};
-
 struct se_scope *se_scope_alloc (int flags)
 {
 	struct se_scope *o;
