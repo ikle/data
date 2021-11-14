@@ -1,7 +1,7 @@
 /*
  * Generic Hash
  *
- * Copyright (c) 2010-2017 Alexei A. Smekalkine
+ * Copyright (c) 2010-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -11,6 +11,6 @@
 
 #include <stddef.h>
 
-size_t hash (size_t hash, const void *data, size_t size);
+size_t hash (size_t iv, const void *data, size_t size);
 
 #endif  /* DATA_HASH_H */
