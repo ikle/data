@@ -1,5 +1,5 @@
 /*
- * Opening Addressing Hash Table
+ * Colibri Opening Addressing Hash Table
  *
  * Copyright (c) 2017-2021 Alexei A. Smekalkine
  *
@@ -11,29 +11,29 @@
 
 #include <data/ht.h>
 
-int ht_init (struct ht *ht, const struct data_type *type)
+int ht_init (struct ht *o, const struct data_type *type)
 {
 	if (type == NULL || type->hash == NULL) {
 		errno = EINVAL;
 		return 0;
 	}
 
-	ht->type  = type;
-	ht->count = 0;
-	ht->size  = 4;
+	o->type  = type;
+	o->count = 0;
+	o->size  = 4;
 
-	return (ht->table = calloc (ht->size, sizeof (ht->table[0]))) != NULL;
+	return (o->table = calloc (o->size, sizeof (o->table[0]))) != NULL;
 }
 
-void ht_fini (struct ht *ht)
+void ht_fini (struct ht *o)
 {
 	size_t i;
 
-	if (ht->type->free == NULL)
+	if (o->type->free == NULL)
 		return;
 
-	for (i = 0; i < ht->size; ++i)
-		ht->type->free (ht->table[i]);
+	for (i = 0; i < o->size; ++i)
+		o->type->free (o->table[i]);
 }
 
 static size_t get_slot (const struct data_type *type, size_t size,
@@ -51,85 +51,85 @@ static size_t get_slot (const struct data_type *type, size_t size,
 	return i;
 }
 
-size_t ht_index (const struct ht *ht, const void *o)
+size_t ht_index (const struct ht *o, const void *sample)
 {
-	return get_slot (ht->type, ht->size, ht->table, o);
+	return get_slot (o->type, o->size, o->table, sample);
 }
 
-void *ht_lookup (const struct ht *ht, const void *o)
+void *ht_lookup (const struct ht *o, const void *sample)
 {
-	return ht->table[ht_index (ht, o)];
+	return o->table[ht_index (o, sample)];
 }
 
-static int resize (struct ht *ht)
+static int resize (struct ht *o)
 {
-	if (ht->count <= ht->size / 2)  /* load factor <= 50% */
+	if (o->count <= o->size / 2)  /* load factor <= 50% */
 		return 1;
 
-	const size_t size = ht->size * 2;
+	const size_t size = o->size * 2;
 	void **table;
 	size_t i;
-	void *o;
+	void *item;
 
 	if ((table = calloc (size, sizeof (table[0]))) == NULL)
 		return 0;
 
-	ht_foreach (i, o, ht)
-		table[get_slot (ht->type, size, table, o)] = o;
+	ht_foreach (i, item, o)
+		table[get_slot (o->type, size, table, item)] = item;
 
-	free (ht->table);
+	free (o->table);
 
-	ht->size  = size;
-	ht->table = table;
+	o->size  = size;
+	o->table = table;
 	return 1;
 }
 
-void *ht_insert (struct ht *ht, const void *o, int replace)
+void *ht_insert (struct ht *o, const void *sample, int replace)
 {
 	size_t i;
 	void *item;
 
-	if (!resize (ht))
+	if (!resize (o))
 		return 0;
 
-	i = ht_index (ht, o);
+	i = ht_index (o, sample);
 
-	if (ht->table[i] != NULL) {
+	if (o->table[i] != NULL) {
 		if (!replace) {
 			errno = EEXIST;
 			return NULL;
 		}
 	}
 
-	if ((item = ht->type->copy (o)) == NULL)
+	if ((item = o->type->copy (sample)) == NULL)
 		return NULL;
 
-	if (ht->table[i] != NULL)
-		ht->type->free (ht->table[i]);
+	if (o->table[i] != NULL)
+		o->type->free (o->table[i]);
 	else
-		++ht->count;
+		++o->count;
 
-	return ht->table[i] = item;
+	return o->table[i] = item;
 }
 
-void ht_remove (struct ht *ht, const void *o)
+void ht_remove (struct ht *o, const void *sample)
 {
-	size_t i = ht_index (ht, o);
+	size_t i = ht_index (o, sample);
 
-	if (ht->table[i] == NULL)
+	if (o->table[i] == NULL)
 		return;
 
-	ht->type->free (ht->table[i]);
-	ht->table[i] = NULL;
-	--ht->count;
+	o->type->free (o->table[i]);
+	o->table[i] = NULL;
+	--o->count;
 }
 
-void ht_clean (struct ht *ht)
+void ht_clean (struct ht *o)
 {
 	size_t i;
 
-	ht_fini (ht);
+	ht_fini (o);
 
-	for (i = 0; i < ht->size; ++i)
-		ht->table[i] = NULL;
+	for (i = 0; i < o->size; ++i)
+		o->table[i] = NULL;
 }

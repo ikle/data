@@ -24,17 +24,17 @@ struct ht {
 	void **table;
 };
 
-int  ht_init (struct ht *ht, const struct data_type *type);
-void ht_fini (struct ht *ht);
+int  ht_init (struct ht *o, const struct data_type *type);
+void ht_fini (struct ht *o);
 
-size_t ht_index (const struct ht *ht, const void *o);
-void *ht_lookup (const struct ht *ht, const void *o);
-void *ht_insert (struct ht *ht, const void *o, int replace);
-void ht_remove (struct ht *ht, const void *o);
-void ht_clean (struct ht *ht);
+size_t ht_index (const struct ht *o, const void *sample);
+void *ht_lookup (const struct ht *o, const void *sample);
+void *ht_insert (struct ht *o, const void *sample, int replace);
+void ht_remove  (struct ht *o, const void *sample);
+void ht_clean   (struct ht *o);
 
-#define ht_foreach(i, o, ht)				\
-	for ((i) = 0; (i) < (ht)->size; ++(i))		\
-		if (((o) = (ht)->table[i]) != NULL)
+#define ht_foreach(i, item, o)				\
+	for ((i) = 0; (i) < (o)->size; ++(i))		\
+		if (((item) = (o)->table[i]) != NULL)
 
 #endif  /* COLIBRI_DATA_HT_H */
