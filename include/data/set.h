@@ -27,6 +27,19 @@ static inline void Type##_set_fini (struct Type##_set *o)		\
 	ht_fini (&o->table);						\
 }									\
 									\
+static inline struct Type##_set *Type##_set_clone (			\
+	const struct Type##_set *o					\
+)									\
+{									\
+	return ht_copy (o);						\
+}									\
+									\
+static inline int Type##_set_eq (const struct Type##_set *a,		\
+				 const struct Type##_set *b)		\
+{									\
+	return ht_eq (a, b);						\
+}									\
+									\
 static inline void Type##_set_clean (struct Type##_set *o)		\
 {									\
 	ht_clean (&o->table);						\
