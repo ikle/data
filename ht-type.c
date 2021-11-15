@@ -59,8 +59,9 @@ size_t ht_hash (size_t iv, const void *o)
 	size_t i;
 	void *entry;
 
-	/* NOTE: we need to calculate order-independed hash from entries */
-
+	/*
+	 * Calculate order-independed hash from entries order
+	 */
 	ht_foreach (i, entry, p)
 		iv ^= p->type->hash (0, entry);
 
