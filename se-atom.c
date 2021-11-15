@@ -47,20 +47,13 @@ struct se *se_atom (struct se_scope *scope, const char *name)
 {
 	char *o;
 
-	if ((o = ht_lookup (&scope->table, (void *) name)) != NULL)
+	if ((o = ht_lookup (&scope->table, name)) != NULL)
 		return name_to_atom (o);
 
-	if ((o = strdup (name)) == NULL)
-		goto no_object;
+	if (!ht_insert (&scope->table, name, 0))
+		return NULL;
 
-	if (!ht_insert (&scope->table, o, 0))
-		goto no_insert;
-
-	return name_to_atom (o);
-no_insert:
-	free (o);
-no_object:
-	return NULL;
+	return name_to_atom (ht_lookup (&scope->table, name));
 }
 
 const char *se_atom_name (const struct se *o)

@@ -36,6 +36,24 @@ void ht_fini (struct ht *ht)
 		ht->type->free (ht->table[i]);
 }
 
+void *ht_copy (const void *from)
+{
+	const struct ht *src = from;
+	struct ht *o;
+	size_t i;
+	void *item;
+
+	if ((o = malloc (sizeof (*o))) == NULL)
+		return NULL;
+
+	ht_init (o, src->type);
+
+	ht_foreach (i, item, src)
+		o->table[i] = o->type->copy (item);
+
+	return o;
+}
+
 size_t ht_hash (size_t iv, const void *o)
 {
 	const struct ht *p = o;
@@ -115,9 +133,10 @@ static int resize (struct ht *ht)
 	return 1;
 }
 
-int ht_insert (struct ht *ht, void *o, int replace)
+int ht_insert (struct ht *ht, const void *o, int replace)
 {
 	size_t i;
+	void *item;
 
 	if (!resize (ht))
 		return 0;
@@ -129,13 +148,17 @@ int ht_insert (struct ht *ht, void *o, int replace)
 			errno = EEXIST;
 			return 0;
 		}
-
-		ht->type->free (ht->table[i]);
 	}
+
+	if ((item = ht->type->copy (o)) == NULL)
+		return 0;
+
+	if (ht->table[i] != NULL)
+		ht->type->free (ht->table[i]);
 	else
 		++ht->count;
 
-	ht->table[i] = o;
+	ht->table[i] = item;
 	return 1;
 }
 

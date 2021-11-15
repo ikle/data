@@ -12,6 +12,7 @@
 #include <stddef.h>
 
 struct data_type {
+	void *(*copy) (const void *from);
 	void (*free) (void *o);
 	int (*eq) (const void *o, const void *sample);
 	size_t (*hash) (size_t iv, const void *o);
