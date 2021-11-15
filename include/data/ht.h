@@ -33,8 +33,8 @@ void *ht_insert (struct ht *o, const void *sample, int replace);
 void ht_remove  (struct ht *o, const void *sample);
 void ht_clean   (struct ht *o);
 
-#define ht_foreach(i, item, o)				\
+#define ht_foreach(i, entry, o)				\
 	for ((i) = 0; (i) < (o)->size; ++(i))		\
-		if (((item) = (o)->table[i]) != NULL)
+		if (((entry) = (o)->table[i]) != NULL)
 
 #endif  /* COLIBRI_DATA_HT_H */

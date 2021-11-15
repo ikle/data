@@ -50,7 +50,7 @@ static const char *strings[] = {
 static void do_test (const struct data_type *type)
 {
 	struct ht ht;
-	const char **p, *item;
+	const char **p, *entry;
 	size_t i;
 
 	if (!ht_init (&ht, type))
@@ -65,9 +65,9 @@ static void do_test (const struct data_type *type)
 
 	printf ("load factor = %zu%%\n\n", ht.count * 100 / ht.size);
 
-	ht_foreach (i, item, &ht)
+	ht_foreach (i, entry, &ht)
 		printf ("%2zu at %2zu: %s\n",
-			type->hash (0, ht.table[i]) & (ht.size - 1), i, item);
+			type->hash (0, ht.table[i]) & (ht.size - 1), i, entry);
 
 	ht_fini (&ht);
 }

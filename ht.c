@@ -69,13 +69,13 @@ static int resize (struct ht *o)
 	const size_t size = o->size * 2;
 	void **table;
 	size_t i;
-	void *item;
+	void *entry;
 
 	if ((table = calloc (size, sizeof (table[0]))) == NULL)
 		return 0;
 
-	ht_foreach (i, item, o)
-		table[get_slot (o->type, size, table, item)] = item;
+	ht_foreach (i, entry, o)
+		table[get_slot (o->type, size, table, entry)] = entry;
 
 	free (o->table);
 
@@ -87,7 +87,7 @@ static int resize (struct ht *o)
 void *ht_insert (struct ht *o, const void *sample, int replace)
 {
 	size_t i;
-	void *item;
+	void *entry;
 
 	if (!resize (o))
 		return 0;
@@ -101,7 +101,7 @@ void *ht_insert (struct ht *o, const void *sample, int replace)
 		}
 	}
 
-	if ((item = o->type->copy (sample)) == NULL)
+	if ((entry = o->type->copy (sample)) == NULL)
 		return NULL;
 
 	if (o->table[i] != NULL)
@@ -109,7 +109,7 @@ void *ht_insert (struct ht *o, const void *sample, int replace)
 	else
 		++o->count;
 
-	return o->table[i] = item;
+	return o->table[i] = entry;
 }
 
 void ht_remove (struct ht *o, const void *sample)
