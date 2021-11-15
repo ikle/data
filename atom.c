@@ -6,8 +6,6 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <string.h>
-
 #include <data/hash.h>
 #include <data/atom.h>
 
@@ -23,12 +21,12 @@ void atom_free (void *o)
 
 int atom_eq (const void *a, const void *b)
 {
-	return strcmp (a, b) == 0;
+	return a == b;
 }
 
 size_t atom_hash (size_t iv, const void *o)
 {
-	return hash (iv, o, strlen (o));
+	return hash (iv, &o, sizeof (o));
 }
 
 const struct data_type atom_type = {
