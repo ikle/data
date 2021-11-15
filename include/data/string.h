@@ -12,6 +12,7 @@
 #include <data/type.h>
 
 void  *string_copy (const void *from);
+void   string_free (void *o);
 int    string_eq   (const void *o, const void *sample);
 size_t string_hash (size_t iv, const void *o);
 
