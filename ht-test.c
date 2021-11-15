@@ -20,8 +20,8 @@ static void *string_copy_const (const void *from)
 
 static const struct data_type string_good_type = {
 	.copy	= string_copy_const,
-	.hash	= string_hash,
 	.eq	= string_eq,
+	.hash	= string_hash,
 };
 
 static size_t string_bad_hash (size_t iv, const void *o)
@@ -31,8 +31,8 @@ static size_t string_bad_hash (size_t iv, const void *o)
 
 static const struct data_type string_bad_type = {
 	.copy	= string_copy_const,
-	.hash	= string_bad_hash,
 	.eq	= string_eq,
+	.hash	= string_bad_hash,
 };
 
 static size_t string_very_bad_hash (size_t iv, const void *o)
@@ -42,8 +42,8 @@ static size_t string_very_bad_hash (size_t iv, const void *o)
 
 static const struct data_type string_very_bad_type = {
 	.copy	= string_copy_const,
-	.hash	= string_very_bad_hash,
 	.eq	= string_eq,
+	.hash	= string_very_bad_hash,
 };
 
 static const char *strings[] = {
