@@ -86,4 +86,8 @@ static inline void Type##_set_diff (struct Type##_set *o,		\
 		Type##_set_del (o, entry);				\
 }
 
+#define set_foreach(i, entry, o)					\
+	for ((i) = 0; (i) < (o)->table.size; ++(i))			\
+		if (((entry) = (o)->table.table[i]) != NULL)
+
 #endif  /* COLIBRI_DATA_SET_H */
