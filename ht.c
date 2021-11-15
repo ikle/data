@@ -87,7 +87,7 @@ void *ht_insert (struct ht *o, const void *sample, int replace)
 	void *entry;
 
 	if (!resize (o))
-		return 0;
+		return NULL;
 
 	i = ht_index (o, sample);
 
