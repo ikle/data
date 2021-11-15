@@ -62,7 +62,7 @@ size_t ht_hash (size_t iv, const void *o)
 	/* NOTE: we need to calculate order-independed hash from entries */
 
 	ht_foreach (i, entry, p)
-		iv = p->type->hash (iv, entry);
+		iv ^= p->type->hash (0, entry);
 
 	return iv;
 }
