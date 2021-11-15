@@ -15,8 +15,8 @@
 int bitset_is_member (const struct bitset *o, size_t x)
 {
 	const size_t size = sizeof (o->set[0]) * CHAR_BIT;
-	const size_t pos = (x + (CHAR_BIT - 1)) / size;
-	const size_t bit = (x + (CHAR_BIT - 1)) % size;
+	const size_t pos = x / size;
+	const size_t bit = x % size;
 
 	if (pos >= o->count)
 		return 0;
@@ -52,8 +52,8 @@ static void bitset_shrink (struct bitset *o)
 int bitset_add (struct bitset *o, size_t x)
 {
 	const size_t size = sizeof (o->set[0]) * CHAR_BIT;
-	const size_t pos = (x + (CHAR_BIT - 1)) / size;
-	const size_t bit = (x + (CHAR_BIT - 1)) % size;
+	const size_t pos = x / size;
+	const size_t bit = x % size;
 
 	if (!bitset_prepare (o, pos + 1))
 		return 0;
@@ -66,8 +66,8 @@ int bitset_add (struct bitset *o, size_t x)
 void bitset_del (struct bitset *o, size_t x)
 {
 	const size_t size = sizeof (o->set[0]) * CHAR_BIT;
-	const size_t pos = (x + (CHAR_BIT - 1)) / size;
-	const size_t bit = (x + (CHAR_BIT - 1)) % size;
+	const size_t pos = x / size;
+	const size_t bit = x % size;
 
 	if (pos < o->count)
 		o->set[pos] &= ~(1UL << bit);
