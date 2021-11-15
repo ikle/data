@@ -12,6 +12,12 @@
 
 #include <data/bitset.h>
 
+void bitset_clean (struct bitset *o)
+{
+	memset (o->set, 0, o->count * sizeof (o->set[0]));
+	o->count = 0;
+}
+
 int bitset_is_member (const struct bitset *o, size_t x)
 {
 	const size_t size = sizeof (o->set[0]) * CHAR_BIT;

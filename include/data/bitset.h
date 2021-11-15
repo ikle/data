@@ -37,6 +37,8 @@ static inline void bitset_fini (struct bitset *o)
 	free (o->set);
 }
 
+void bitset_clean (struct bitset *o);
+
 int bitset_is_member (const struct bitset *o, size_t x);
 
 /* o = o U {x} */
