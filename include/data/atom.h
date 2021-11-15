@@ -12,8 +12,9 @@
 #include <data/type.h>
 
 /*
- * An atom is a constant string, where two identical strings with different
- * pointers cannot exist. 
+ * An atom is a pointer. It can be used, for example, to store constant
+ * strings, where two identical strings with different pointers cannot
+ * exist.
  */
 
 void  *atom_copy (const void *from);
