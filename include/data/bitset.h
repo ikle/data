@@ -1,5 +1,5 @@
 /*
- * Compact Binary Set
+ * Colibri Compact Binary Set
  *
  * Copyright (c) 2007-2021 Alexei A. Smekalkine
  *
@@ -13,6 +13,13 @@
 #include <stdlib.h>
 
 #include <data/type.h>
+
+void  *bitset_copy (const void *from);
+void   bitset_free (void *o);
+int    bitset_eq   (const void *o, const void *sample);
+size_t bitset_hash (size_t iv, const void *o);
+
+const struct data_type bitset_type;
 
 struct bitset {
 	size_t count;	/* number of allocated words */
@@ -29,9 +36,6 @@ static inline void bitset_fini (struct bitset *o)
 {
 	free (o->set);
 }
-
-int bitset_eq (const void *a, const void *b);
-size_t bitset_hash (const void *o);
 
 int bitset_is_member (const struct bitset *o, size_t x);
 
