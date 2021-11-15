@@ -18,4 +18,6 @@ size_t string_hash (size_t iv, const void *o);
 
 const struct data_type string_type;
 
+struct string;
+
 #endif  /* COLIBRI_DATA_STRING_H */
