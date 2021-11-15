@@ -22,7 +22,7 @@ struct se_scope *se_scope_alloc (int flags)
 	struct se_scope *o;
 
 	if ((o = malloc (sizeof (*o))) == NULL)
-		goto no_object;
+		return NULL;
 
 	if (!ht_init (&o->table, &string_type))
 		goto no_ht;
@@ -30,7 +30,6 @@ struct se_scope *se_scope_alloc (int flags)
 	return o;
 no_ht:
 	free (o);
-no_object:
 	return NULL;
 }
 
