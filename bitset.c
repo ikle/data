@@ -81,7 +81,7 @@ int bitset_join (struct bitset *o, const struct bitset *s)
 	size_t i;
 
 	if (o->count < s->count && !bitset_prepare (o, s->count))
-			return 0;
+		return 0;
 
 	for (i = 0; i < s->count; ++i)
 		o->set[i] |= s->set[i];
