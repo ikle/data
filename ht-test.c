@@ -57,10 +57,10 @@ static void do_test (const struct data_type *type)
 		err (1, "cannot initialize hash table");
 
 	for (p = strings; *p != NULL; ++p)
-		if (ht_insert (&ht, (void *) *p, 0) == NULL)
+		if (ht_insert (&ht, *p, 0) == NULL)
 			err (1, "cannot insert string");
 
-	if (ht_insert (&ht, (void *) strings[0], 0) != NULL)
+	if (ht_insert (&ht, strings[0], 0) != NULL)
 		errx (1, "string exists, but not found");
 
 	printf ("load factor = %zu%%\n\n", ht.count * 100 / ht.size);
