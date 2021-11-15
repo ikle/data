@@ -29,9 +29,6 @@ void ht_fini (struct ht *o)
 {
 	size_t i;
 
-	if (o->type->free == NULL)
-		return;
-
 	for (i = 0; i < o->size; ++i)
 		o->type->free (o->table[i]);
 }
