@@ -12,8 +12,16 @@
 #include <data/atom.h>
 #include <data/hash.h>
 #include <data/ht.h>
+#include <data/string.h>
 
-static size_t atom_bad_hash (size_t iv, const void *o)
+static const struct data_type atom_good_type = {
+	.copy	= atom_copy,
+	.free	= atom_free,
+	.eq	= atom_eq,
+	.hash	= string_hash,
+};
+
+static size_t string_bad_hash (size_t iv, const void *o)
 {
 	return *(const char *) o;  /* bad hash to test collisions */
 }
@@ -22,10 +30,10 @@ static const struct data_type atom_bad_type = {
 	.copy	= atom_copy,
 	.free	= atom_free,
 	.eq	= atom_eq,
-	.hash	= atom_bad_hash,
+	.hash	= string_bad_hash,
 };
 
-static size_t atom_very_bad_hash (size_t iv, const void *o)
+static size_t string_very_bad_hash (size_t iv, const void *o)
 {
 	return 0;  /* very bad hash to test collisions */
 }
@@ -34,7 +42,7 @@ static const struct data_type atom_very_bad_type = {
 	.copy	= atom_copy,
 	.free	= atom_free,
 	.eq	= atom_eq,
-	.hash	= atom_very_bad_hash,
+	.hash	= string_very_bad_hash,
 };
 
 static const char *strings[] = {
@@ -75,7 +83,7 @@ static void do_test (const struct data_type *type)
 int main (int argc, char *argv[])
 {
 	printf ("With data/hash:\n\n");
-	do_test (&atom_type);
+	do_test (&atom_good_type);
 
 	printf ("\nWith bad hash (value of first character):\n\n");
 	do_test (&atom_bad_type);
