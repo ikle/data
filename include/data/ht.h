@@ -20,8 +20,8 @@ struct ht {
 int  ht_init (struct ht *ht, const struct data_type *type);
 void ht_fini (struct ht *ht);
 
-void *ht_copy (const void *from);
-int ht_eq (const void *o, const void *sample);
+void  *ht_copy (const void *from);
+int    ht_eq   (const void *o, const void *sample);
 size_t ht_hash (size_t iv, const void *o);
 
 size_t ht_index (const struct ht *ht, const void *o);
