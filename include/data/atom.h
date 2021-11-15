@@ -24,4 +24,6 @@ size_t atom_hash (size_t iv, const void *o);
 
 const struct data_type atom_type;
 
+struct atom;
+
 #endif  /* COLIBRI_DATA_ATOM_H */
