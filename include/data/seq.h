@@ -13,6 +13,7 @@
 #include <stddef.h>
 
 #define SEQ_DECLARE(type)						\
+									\
 struct type##_seq {							\
 	struct type *head, **tail;					\
 };									\
@@ -25,7 +26,7 @@ static inline void type##_seq_init (struct type##_seq *s)		\
 	s->tail = &s->head;						\
 }									\
 									\
-static void inline type##_seq_fini (struct type##_seq *s,		\
+static inline void type##_seq_fini (struct type##_seq *s,		\
 			     void (*f) (struct type *))			\
 {									\
 	struct type *i, *next;						\
