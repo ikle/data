@@ -42,6 +42,16 @@ int main (int argc, char *argv[])
 			fprintf (stderr, "W: cannot add '%s' to set\n",
 				 string_get (list[i]));
 
+	printf ("A:\n\n");
+
+	set_foreach (i, entry, &A)
+		printf ("%2zu: %s\n", i, entry);
+
+	string_set_del (&A, list[1]);
+	string_set_del (&A, list[3]);
+
+	printf ("\nA \\ {list[1], list[3]}:\n\n");
+
 	set_foreach (i, entry, &A)
 		printf ("%2zu: %s\n", i, entry);
 
