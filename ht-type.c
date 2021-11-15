@@ -39,8 +39,7 @@ void ht_free (void *o)
 
 int ht_eq (const void *a, const void *b)
 {
-	const struct ht *p = a;
-	const struct ht *q = b;
+	const struct ht *p = a, *q = b;
 	size_t i;
 	void *entry;
 
