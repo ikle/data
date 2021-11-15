@@ -91,11 +91,9 @@ void *ht_insert (struct ht *o, const void *sample, int replace)
 
 	i = ht_index (o, sample);
 
-	if (o->table[i] != NULL) {
-		if (!replace) {
-			errno = EEXIST;
-			return NULL;
-		}
+	if (o->table[i] != NULL && !replace) {
+		errno = EEXIST;
+		return NULL;
 	}
 
 	if ((entry = o->type->copy (sample)) == NULL)
