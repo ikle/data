@@ -26,15 +26,17 @@ int bitset_is_member (const struct bitset *o, size_t x)
 
 static int bitset_prepare (struct bitset *o, size_t count)
 {
+	const size_t old_size = o->count * sizeof (o->set[0]);
+	const size_t new_size = count    * sizeof (o->set[0]);
 	unsigned long *p;
 
 	if (count <= o->count)
 		return 1;
 
-	if ((p = realloc (o->set, count)) == NULL)
+	if ((p = realloc (o->set, new_size)) == NULL)
 		return 0;
 
-	memset (p + o->count, 0, (count - o->count) * sizeof (o->set[0]));
+	memset (p + o->count, 0, new_size - old_size);
 
 	o->count = count;
 	o->set = p;
