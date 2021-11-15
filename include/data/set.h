@@ -41,7 +41,7 @@ static inline int Type##_set_is_member (struct Type##_set *o,		\
 static inline const struct Type *Type##_set_add (struct Type##_set *o,	\
 						 const struct Type *e)	\
 {									\
-	return ht_insert (&o->table, e, 1);				\
+	return ht_insert (&o->table, e, 0);				\
 }									\
 									\
 static inline void Type##_set_del (struct Type##_set *o,		\

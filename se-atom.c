@@ -45,8 +45,7 @@ struct se *se_atom (struct se_scope *scope, const char *name)
 {
 	char *o;
 
-	if ((o = ht_lookup (&scope->table, name))    == NULL &&
-	    (o = ht_insert (&scope->table, name, 0)) == NULL)
+	if ((o = ht_insert (&scope->table, name, 0)) == NULL)
 		return NULL;
 
 	return name_to_atom (o);

@@ -27,9 +27,14 @@ struct ht {
 int  ht_init (struct ht *o, const struct data_type *type);
 void ht_fini (struct ht *o);
 
+enum ht_policy {
+	HT_ONCE		= 0x1,
+	HT_REPLACE	= 0x2,
+};
+
 size_t ht_index (const struct ht *o, const void *sample);
 void *ht_lookup (const struct ht *o, const void *sample);
-void *ht_insert (struct ht *o, const void *sample, int replace);
+void *ht_insert (struct ht *o, const void *sample, int policy);
 void ht_remove  (struct ht *o, const void *sample);
 void ht_clean   (struct ht *o);
 

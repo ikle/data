@@ -68,7 +68,7 @@ static void do_test (const struct data_type *type)
 		if (ht_insert (&ht, *p, 0) == NULL)
 			err (1, "cannot insert string");
 
-	if (ht_insert (&ht, strings[0], 0) != NULL)
+	if (ht_insert (&ht, strings[0], HT_ONCE) != NULL)
 		errx (1, "string exists, but not found");
 
 	printf ("load factor = %zu%%\n\n", ht.count * 100 / ht.size);

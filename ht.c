@@ -81,7 +81,7 @@ static int resize (struct ht *o)
 	return 1;
 }
 
-void *ht_insert (struct ht *o, const void *sample, int replace)
+void *ht_insert (struct ht *o, const void *sample, int policy)
 {
 	size_t i;
 	void *entry;
@@ -91,9 +91,14 @@ void *ht_insert (struct ht *o, const void *sample, int replace)
 
 	i = ht_index (o, sample);
 
-	if (o->table[i] != NULL && !replace) {
-		errno = EEXIST;
-		return NULL;
+	if (o->table[i] != NULL) {
+		if ((policy & HT_ONCE) != 0) {
+			errno = EEXIST;
+			return NULL;
+		}
+
+		if ((policy & HT_REPLACE) == 0)
+			return o->table[i];
 	}
 
 	if ((entry = o->type->copy (sample)) == NULL)
