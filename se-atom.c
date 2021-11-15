@@ -50,10 +50,10 @@ struct se *se_atom (struct se_scope *scope, const char *name)
 	if ((o = ht_lookup (&scope->table, name)) != NULL)
 		return name_to_atom (o);
 
-	if (!ht_insert (&scope->table, name, 0))
+	if ((o = ht_insert (&scope->table, name, 0)) == NULL)
 		return NULL;
 
-	return name_to_atom (ht_lookup (&scope->table, name));
+	return name_to_atom (o);
 }
 
 const char *se_atom_name (const struct se *o)

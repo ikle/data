@@ -133,7 +133,7 @@ static int resize (struct ht *ht)
 	return 1;
 }
 
-int ht_insert (struct ht *ht, const void *o, int replace)
+void *ht_insert (struct ht *ht, const void *o, int replace)
 {
 	size_t i;
 	void *item;
@@ -146,20 +146,19 @@ int ht_insert (struct ht *ht, const void *o, int replace)
 	if (ht->table[i] != NULL) {
 		if (!replace) {
 			errno = EEXIST;
-			return 0;
+			return NULL;
 		}
 	}
 
 	if ((item = ht->type->copy (o)) == NULL)
-		return 0;
+		return NULL;
 
 	if (ht->table[i] != NULL)
 		ht->type->free (ht->table[i]);
 	else
 		++ht->count;
 
-	ht->table[i] = item;
-	return 1;
+	return ht->table[i] = item;
 }
 
 void ht_remove (struct ht *ht, const void *o)
