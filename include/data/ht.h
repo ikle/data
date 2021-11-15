@@ -21,6 +21,7 @@ int  ht_init (struct ht *ht, const struct data_type *type);
 void ht_fini (struct ht *ht);
 
 void  *ht_copy (const void *from);
+void   ht_free (void *o);
 int    ht_eq   (const void *o, const void *sample);
 size_t ht_hash (size_t iv, const void *o);
 

@@ -54,6 +54,15 @@ void *ht_copy (const void *from)
 	return o;
 }
 
+void ht_free (void *o)
+{
+	if (o == NULL)
+		return;
+
+	ht_fini (o);
+	free (o);
+}
+
 size_t ht_hash (size_t iv, const void *o)
 {
 	const struct ht *p = o;
