@@ -11,6 +11,13 @@
 
 #include <data/type.h>
 
+void  *ht_copy (const void *from);
+void   ht_free (void *o);
+int    ht_eq   (const void *o, const void *sample);
+size_t ht_hash (size_t iv, const void *o);
+
+const struct data_type ht_type;
+
 struct ht {
 	const struct data_type *type;
 	size_t count, size;
@@ -19,11 +26,6 @@ struct ht {
 
 int  ht_init (struct ht *ht, const struct data_type *type);
 void ht_fini (struct ht *ht);
-
-void  *ht_copy (const void *from);
-void   ht_free (void *o);
-int    ht_eq   (const void *o, const void *sample);
-size_t ht_hash (size_t iv, const void *o);
 
 size_t ht_index (const struct ht *ht, const void *o);
 void *ht_lookup (const struct ht *ht, const void *o);

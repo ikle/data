@@ -36,64 +36,6 @@ void ht_fini (struct ht *ht)
 		ht->type->free (ht->table[i]);
 }
 
-void *ht_copy (const void *from)
-{
-	const struct ht *src = from;
-	struct ht *o;
-	size_t i;
-	void *item;
-
-	if ((o = malloc (sizeof (*o))) == NULL)
-		return NULL;
-
-	ht_init (o, src->type);
-
-	ht_foreach (i, item, src)
-		o->table[i] = o->type->copy (item);
-
-	return o;
-}
-
-void ht_free (void *o)
-{
-	if (o == NULL)
-		return;
-
-	ht_fini (o);
-	free (o);
-}
-
-size_t ht_hash (size_t iv, const void *o)
-{
-	const struct ht *p = o;
-	size_t i;
-	void *item;
-
-	/* NOTE: we need to calculate order-independed hash from items */
-
-	ht_foreach (i, item, p)
-		iv = p->type->hash (iv, item);
-
-	return iv;
-}
-
-int ht_eq (const void *a, const void *b)
-{
-	const struct ht *p = a;
-	const struct ht *q = b;
-	size_t i;
-	void *item;
-
-	if (p->count != q->count || p->type != q->type)
-		return 0;
-
-	ht_foreach (i, item, p)
-		if (!p->type->eq (item, ht_lookup (q, item)))
-			return 0;
-
-	return 1;
-}
-
 static size_t get_slot (const struct data_type *type, size_t size,
 			void **table, const void *o)
 {
