@@ -114,7 +114,9 @@ void *ht_insert (struct ht *o, const void *sample, int policy)
 
 void ht_remove (struct ht *o, const void *sample)
 {
+	const size_t mask = o->size - 1;  /* size MUST be power of two */
 	size_t i = ht_index (o, sample);
+	void *entry;
 
 	if (o->table[i] == NULL)
 		return;
@@ -122,6 +124,15 @@ void ht_remove (struct ht *o, const void *sample)
 	o->type->free (o->table[i]);
 	o->table[i] = NULL;
 	--o->count;
+
+	for (
+		i = (i + 1) & mask;
+		(entry = o->table[i]) != NULL;
+		i = (i + 1) & mask
+	) {
+		o->table[i] = NULL;
+		o->table[ht_index (o, entry)] = entry;
+	}
 }
 
 void ht_clean (struct ht *o)
