@@ -77,6 +77,14 @@ static void do_test (const struct data_type *type)
 		printf ("%2zu at %2zu: %s\n",
 			type->hash (0, ht.table[i]) & (ht.size - 1), i, entry);
 
+	printf ("\nremove item #3: %s\n\n", strings [3]);
+
+	ht_remove (&ht, strings [3]);
+
+	ht_foreach (i, entry, &ht)
+		printf ("%2zu at %2zu: %s\n",
+			type->hash (0, ht.table[i]) & (ht.size - 1), i, entry);
+
 	ht_fini (&ht);
 }
 
