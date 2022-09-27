@@ -43,15 +43,15 @@ void *bh_top (struct bh *o)
 
 static int bh_resize (struct bh *o)
 {
-	size_t count;
+	size_t count = (o->tail < 8) ? 8 : o->tail * 2;
 	void *pool;
 
 	if (o->tail < o->avail)
 		return 1;
 
-	if ((count = (o->tail < 8) ? 8 : o->tail * 2) < o->tail) {
-		errno = ERANGE;
-		count = SIZE_MAX;
+	if (sizeof (o->pool[0]) * count < sizeof (o->pool[0]) * o->tail) {
+		errno = ENOMEM;
+		return 0;
 	}
 
 	if ((pool = realloc (o->pool, sizeof (o->pool[0]) * count)) == NULL)
@@ -59,7 +59,7 @@ static int bh_resize (struct bh *o)
 
 	o->pool  = pool;
 	o->avail = count;
-	return o->tail < o->avail;
+	return 1;
 }
 
 static void bh_bubble_up (struct bh *o, size_t i)
