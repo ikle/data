@@ -88,8 +88,8 @@ static void bh_bubble_down (struct bh *o, size_t i)
 
 	for (
 		;
-		(child = bh_max_child (o, i)) < SIZE_MAX &&
-		!o->cmp (o->pool [child], x);
+		(child = bh_max_child (o, i)) != SIZE_MAX &&
+		!o->cmp (x, o->pool [child]);
 		i = child
 	)
 		o->pool[i] = o->pool[child];  /* pull up */
