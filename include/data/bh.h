@@ -30,16 +30,17 @@ void bh_fini (struct bh *o, void (*item_free) (void *o));
 /* returns object with higher priority in head */
 void *bh_top (struct bh *o);
 
-/* queue object to heap, but do not insert it immediately, returns nonzero
-   on success */
-int bh_add (struct bh *o, void *x);
-
 /* commit all pending objects into heap */
 void bh_commit (struct bh *o);
 
-/* insert object into heap: queue object to heap and commit all pending
-   objects, returns nonzero on success */
-int bh_push (struct bh *o, void *x);
+/*
+ * 1. Resize the buffer if necessary unless nowait = 1.
+ * 2. Queue object into heap if there is enough space.
+ * 3. Commit all pending objects into heap unless nowait = 1.
+ *
+ * Returns nonzero on success
+ */
+int bh_push (struct bh *o, void *x, int nowait);
 
 /* commit all pending objects and remove top object from heap */
 void *bh_pop (struct bh *o);
