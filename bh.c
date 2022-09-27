@@ -9,7 +9,6 @@
 #include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <data/bh.h>
 
@@ -129,7 +128,8 @@ int bh_push (struct bh *o, void *x)
 void *bh_pop (struct bh *o)
 {
 	void *x;
-	void **end;
+
+	bh_commit (o);
 
 	if (o->count == 0)
 		return NULL;
@@ -138,12 +138,5 @@ void *bh_pop (struct bh *o)
 
 	o->pool[0] = o->pool[--o->count];
 	bh_bubble_down (o, 0);
-
-	/* move queue to rightful place */
-	--o->tail;
-	end = o->pool + o->count;
-	memmove (end, end + 1, (o->tail - o->count) * sizeof (*end));
-
-	bh_commit (o);
 	return x;
 }
