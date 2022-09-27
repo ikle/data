@@ -76,13 +76,9 @@ static size_t bh_max_child (struct bh *o, size_t i)
 {
 	size_t l = left (i), r = right (i);
 
-	if (l >= o->count)
-		return SIZE_MAX;
-
-	if (r >= o->count)
-		return l;
-
-	return o->cmp (o->pool [r], o->pool [l]) ? r : l;
+	return	l >= o->count ? SIZE_MAX :
+		r >= o->count ? l :
+		o->cmp (o->pool [l], o->pool [r]) ? l : r;
 }
 
 static void bh_bubble_down (struct bh *o, size_t i)
