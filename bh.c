@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include <errno.h>
 #include <stdint.h>
 #include <stdlib.h>
 #include <string.h>
@@ -49,14 +50,17 @@ static int bh_resize (struct bh *o)
 	if (o->tail < o->avail)
 		return 1;
 
-	count = (o->tail + 1) * 3 / 2;
+	if ((count = (o->tail < 8) ? 8 : o->tail * 2) < o->tail) {
+		errno = ERANGE;
+		count = SIZE_MAX;
+	}
 
 	if ((pool = realloc (o->pool, sizeof (o->pool[0]) * count)) == NULL)
 		return 0;
 
 	o->pool  = pool;
 	o->avail = count;
-	return 1;
+	return o->tail < o->avail;
 }
 
 static void bh_bubble_up (struct bh *o, size_t i)
