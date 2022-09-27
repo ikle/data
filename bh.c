@@ -104,7 +104,7 @@ static void bh_bubble_down (struct bh *o, size_t i)
 
 int bh_add (struct bh *o, void *x)
 {
-	if (x == NULL || !bh_resize (o))
+	if (!bh_resize (o))
 		return 0;
 
 	o->pool[o->tail++] = x;
