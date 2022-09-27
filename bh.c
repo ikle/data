@@ -76,7 +76,7 @@ static size_t bh_max_child (struct bh *o, size_t i)
 {
 	size_t l = left (i), r = right (i);
 
-	return	l >= o->count ? SIZE_MAX :
+	return	l >= o->count ? 0 :  /* root cannot be child of any node */
 		r >= o->count ? l :
 		o->cmp (o->pool [l], o->pool [r]) ? l : r;
 }
@@ -88,7 +88,7 @@ static void bh_bubble_down (struct bh *o, size_t i)
 
 	for (
 		;
-		(child = bh_max_child (o, i)) != SIZE_MAX &&
+		(child = bh_max_child (o, i)) != 0 &&
 		!o->cmp (x, o->pool [child]);
 		i = child
 	)
