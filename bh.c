@@ -43,13 +43,13 @@ void *bh_top (struct bh *o)
 
 static int bh_resize (struct bh *o)
 {
-	size_t next = (o->tail < 8) ? 8 : o->tail * 2;
+	size_t next = (o->avail < 8) ? 8 : o->avail * 2;
 	void *pool;
 
 	if (o->tail < o->avail)
 		return 1;
 
-	if (sizeof (o->pool[0]) * next < sizeof (o->pool[0]) * o->tail) {
+	if (sizeof (o->pool[0]) * next < sizeof (o->pool[0]) * o->avail) {
 		errno = ENOMEM;
 		return 0;
 	}
