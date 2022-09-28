@@ -130,7 +130,7 @@ void *bh_pop (struct bh *o)
 
 	x = o->pool[0];
 
-	o->pool[0] = o->pool[--o->count];
+	o->pool[0] = o->pool[o->tail = --o->count];
 	bh_bubble_down (o, 0);
 	return x;
 }
