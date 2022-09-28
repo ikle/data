@@ -41,16 +41,13 @@ void *bh_top (struct bh *o)
 	return (o->count > 0) ? o->pool[0] : NULL;
 }
 
-static int bh_resize (struct bh *o, int nowait)
+static int bh_resize (struct bh *o)
 {
 	size_t next = (o->avail < 8) ? 8 : o->avail * 2;
 	void *pool;
 
 	if (o->tail < o->avail)
 		return 1;
-
-	if (nowait)
-		return 0;
 
 	if (sizeof (o->pool[0]) * next < sizeof (o->pool[0]) * o->avail) {
 		errno = ENOMEM;
@@ -108,7 +105,7 @@ void bh_commit (struct bh *o)
 
 int bh_push (struct bh *o, void *x, int nowait)
 {
-	if (!bh_resize (o, nowait))
+	if (o->tail >= o->avail && (nowait || !bh_resize (o)))
 		return 0;
 
 	o->pool[o->tail++] = x;
