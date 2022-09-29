@@ -1,7 +1,7 @@
 /*
  * Colibry Atom Type
  *
- * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ * Copyright (c) 2017-2022 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -23,7 +23,5 @@ int    atom_eq   (const void *o, const void *sample);
 size_t atom_hash (size_t iv, const void *o);
 
 const struct data_type atom_type;
-
-struct atom;
 
 #endif  /* COLIBRI_DATA_ATOM_H */
