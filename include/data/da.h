@@ -9,16 +9,15 @@
 #ifndef COLIBRI_DATA_DA_H
 #define COLIBRI_DATA_DA_H  1
 
-#include <data/type.h>
+#include <stddef.h>
 
 struct da {
-	const struct data_type *type;
 	size_t count, size;
 	void **table;
 };
 
-void da_init (struct da *o, const struct data_type *type);
-void da_fini (struct da *o);
+void da_init (struct da *o);
+void da_fini (struct da *o, void (*entry_free) (void *o));
 
 int da_add (struct da *o, void *e);
 

@@ -11,20 +11,19 @@
 
 #include <data/da.h>
 
-void da_init (struct da *o, const struct data_type *type)
+void da_init (struct da *o)
 {
-	o->type  = type;
 	o->count = 0;
 	o->size  = 0;
 	o->table = NULL;
 }
 
-void da_fini (struct da *o)
+void da_fini (struct da *o, void (*entry_free) (void *o))
 {
 	size_t i;
 
 	for (i = 0; i < o->count; ++i)
-		o->type->free (o->table[i]);
+		entry_free (o->table[i]);
 
 	free (o->table);
 }
