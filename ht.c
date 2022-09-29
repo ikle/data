@@ -1,7 +1,7 @@
 /*
  * Colibri Opening Addressing Hash Table
  *
- * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ * Copyright (c) 2017-2022 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -31,6 +31,8 @@ void ht_fini (struct ht *o)
 
 	for (i = 0; i < o->size; ++i)
 		o->type->free (o->table[i]);
+
+	free (o->table);
 }
 
 static size_t get_slot (const struct data_type *type, size_t size,
