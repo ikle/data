@@ -44,10 +44,10 @@ static int resize (struct da *o)
 		return 0;
 	}
 
-	if ((table = realloc (o->table, sizeof (table[0]) * size)) == NULL)
+	if ((table = realloc (o->table, sizeof (o->table[0]) * size)) == NULL)
 		return 0;
 
-	memset (table + o->size, 0, sizeof (table[0]) * o->size);
+	memset (table + o->size, 0, sizeof (o->table[0]) * o->size);
 
 	o->size  = size;
 	o->table = table;
