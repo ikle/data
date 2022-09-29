@@ -19,6 +19,6 @@ struct da {
 void da_init (struct da *o);
 void da_fini (struct da *o, void (*entry_free) (void *o));
 
-int da_add (struct da *o, void *e);
+int da_append (struct da *o, void *e);
 
 #endif  /* COLIBRI_DATA_DA_H */
