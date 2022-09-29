@@ -24,9 +24,8 @@ void da_fini (struct da *o)
 {
 	size_t i;
 
-	if (o->type != NULL && o->type->free != NULL)
-		for (i = 0; i < o->count; ++i)
-			o->type->free (o->table[i]);
+	for (i = 0; i < o->count; ++i)
+		o->type->free (o->table[i]);
 
 	free (o->table);
 }
