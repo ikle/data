@@ -1,7 +1,7 @@
 /*
  * Colibri Dynamic Array
  *
- * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ * Copyright (c) 2017-2022 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -24,11 +24,11 @@ void da_fini (struct da *da)
 {
 	size_t i;
 
-	if (da->type == NULL || da->type->free == NULL)
-		return;
+	if (da->type != NULL && da->type->free != NULL)
+		for (i = 0; i < da->count; ++i)
+			da->type->free (da->table[i]);
 
-	for (i = 0; i < da->count; ++i)
-		da->type->free (da->table[i]);
+	free (da->table);
 }
 
 static int resize (struct da *da)
