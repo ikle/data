@@ -1,7 +1,7 @@
 /*
  * Colibri Dynamic Array
  *
- * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ * Copyright (c) 2017-2022 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -17,9 +17,9 @@ struct da {
 	void **table;
 };
 
-int  da_init (struct da *da, const struct data_type *type);
-void da_fini (struct da *da);
+int  da_init (struct da *o, const struct data_type *type);
+void da_fini (struct da *o);
 
-int da_add (struct da *da, void *o);
+int da_add (struct da *o, void *e);
 
 #endif  /* COLIBRI_DATA_DA_H */

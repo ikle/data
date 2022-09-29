@@ -11,49 +11,49 @@
 
 #include <data/da.h>
 
-int da_init (struct da *da, const struct data_type *type)
+int da_init (struct da *o, const struct data_type *type)
 {
-	da->type  = type;
-	da->count = 0;
-	da->size  = 2;
+	o->type  = type;
+	o->count = 0;
+	o->size  = 2;
 
-	return (da->table = calloc (da->size, sizeof (da->table[0]))) != NULL;
+	return (o->table = calloc (o->size, sizeof (o->table[0]))) != NULL;
 }
 
-void da_fini (struct da *da)
+void da_fini (struct da *o)
 {
 	size_t i;
 
-	if (da->type != NULL && da->type->free != NULL)
-		for (i = 0; i < da->count; ++i)
-			da->type->free (da->table[i]);
+	if (o->type != NULL && o->type->free != NULL)
+		for (i = 0; i < o->count; ++i)
+			o->type->free (o->table[i]);
 
-	free (da->table);
+	free (o->table);
 }
 
-static int resize (struct da *da)
+static int resize (struct da *o)
 {
-	if (da->count < da->size)
+	if (o->count < o->size)
 		return 1;
 
-	const size_t size = da->size * 2;
+	const size_t size = o->size * 2;
 	void **table;
 
-	if ((table = realloc (da->table, sizeof (table[0]) * size)) == NULL)
+	if ((table = realloc (o->table, sizeof (table[0]) * size)) == NULL)
 		return 0;
 
-	memset (table + da->size, 0, sizeof (table[0]) * da->size);
+	memset (table + o->size, 0, sizeof (table[0]) * o->size);
 
-	da->size  = size;
-	da->table = table;
+	o->size  = size;
+	o->table = table;
 	return 1;
 }
 
-int da_add (struct da *da, void *o)
+int da_add (struct da *o, void *e)
 {
-	if (!resize (da))
+	if (!resize (o))
 		return 0;
 
-	da->table[da->count++] = o;
+	o->table[o->count++] = e;
 	return 1;
 }
