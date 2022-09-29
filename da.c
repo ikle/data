@@ -6,6 +6,7 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
+#include <errno.h>
 #include <stdlib.h>
 #include <string.h>
 
@@ -37,6 +38,11 @@ static int resize (struct da *o)
 
 	const size_t size = o->size * 2;
 	void **table;
+
+	if (sizeof (o->table[0]) * size < sizeof (o->table[0]) * o->size) {
+		errno = ENOMEM;
+		return 0;
+	}
 
 	if ((table = realloc (o->table, sizeof (table[0]) * size)) == NULL)
 		return 0;
