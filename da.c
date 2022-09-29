@@ -8,7 +8,6 @@
 
 #include <errno.h>
 #include <stdlib.h>
-#include <string.h>
 
 #include <data/da.h>
 
@@ -46,8 +45,6 @@ static int resize (struct da *o)
 
 	if ((table = realloc (o->table, sizeof (o->table[0]) * size)) == NULL)
 		return 0;
-
-	memset (table + o->size, 0, sizeof (o->table[0]) * o->size);
 
 	o->size  = size;
 	o->table = table;
