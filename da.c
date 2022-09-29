@@ -33,7 +33,7 @@ static int resize (struct da *o)
 	if (o->count < o->avail)
 		return 1;
 
-	const size_t next = (o->avail < 2) ? 2 : o->avail * 2;
+	const size_t next = o->avail * 2 | 1;
 	void **data;
 
 	if (sizeof (o->data[0]) * next < sizeof (o->data[0]) * o->avail) {
