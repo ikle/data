@@ -12,8 +12,8 @@
 #include <stddef.h>
 
 struct da {
-	size_t count, size;
-	void **table;
+	size_t count, avail;
+	void **data;
 };
 
 void da_init (struct da *o);

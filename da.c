@@ -14,8 +14,8 @@
 void da_init (struct da *o)
 {
 	o->count = 0;
-	o->size  = 0;
-	o->table = NULL;
+	o->avail = 0;
+	o->data  = NULL;
 }
 
 void da_fini (struct da *o, void (*entry_free) (void *o))
@@ -23,29 +23,29 @@ void da_fini (struct da *o, void (*entry_free) (void *o))
 	size_t i;
 
 	for (i = 0; i < o->count; ++i)
-		entry_free (o->table[i]);
+		entry_free (o->data[i]);
 
-	free (o->table);
+	free (o->data);
 }
 
 static int resize (struct da *o)
 {
-	if (o->count < o->size)
+	if (o->count < o->avail)
 		return 1;
 
-	const size_t size = (o->size < 2) ? 2 : o->size * 2;
-	void **table;
+	const size_t next = (o->avail < 2) ? 2 : o->avail * 2;
+	void **data;
 
-	if (sizeof (o->table[0]) * size < sizeof (o->table[0]) * o->size) {
+	if (sizeof (o->data[0]) * next < sizeof (o->data[0]) * o->avail) {
 		errno = ENOMEM;
 		return 0;
 	}
 
-	if ((table = realloc (o->table, sizeof (o->table[0]) * size)) == NULL)
+	if ((data = realloc (o->data, sizeof (o->data[0]) * next)) == NULL)
 		return 0;
 
-	o->size  = size;
-	o->table = table;
+	o->avail = next;
+	o->data  = data;
 	return 1;
 }
 
@@ -54,6 +54,6 @@ int da_add (struct da *o, void *e)
 	if (!resize (o))
 		return 0;
 
-	o->table[o->count++] = e;
+	o->data[o->count++] = e;
 	return 1;
 }
