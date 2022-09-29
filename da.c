@@ -18,7 +18,7 @@ void da_init (struct da *o)
 	o->data  = NULL;
 }
 
-void da_fini (struct da *o, void (*entry_free) (void *o))
+void da_fini (struct da *o, void entry_free (void *o))
 {
 	size_t i;
 

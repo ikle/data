@@ -17,7 +17,7 @@ struct da {
 };
 
 void da_init (struct da *o);
-void da_fini (struct da *o, void (*free) (void *o));
+void da_fini (struct da *o, void free (void *o));
 
 int da_append (struct da *o, void *e);
 
