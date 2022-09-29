@@ -17,7 +17,7 @@ struct da {
 	void **table;
 };
 
-int  da_init (struct da *o, const struct data_type *type);
+void da_init (struct da *o, const struct data_type *type);
 void da_fini (struct da *o);
 
 int da_add (struct da *o, void *e);

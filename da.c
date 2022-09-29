@@ -11,13 +11,12 @@
 
 #include <data/da.h>
 
-int da_init (struct da *o, const struct data_type *type)
+void da_init (struct da *o, const struct data_type *type)
 {
 	o->type  = type;
 	o->count = 0;
-	o->size  = 2;
-
-	return (o->table = calloc (o->size, sizeof (o->table[0]))) != NULL;
+	o->size  = 0;
+	o->table = NULL;
 }
 
 void da_fini (struct da *o)
@@ -35,7 +34,7 @@ static int resize (struct da *o)
 	if (o->count < o->size)
 		return 1;
 
-	const size_t size = o->size * 2;
+	const size_t size = (o->size < 2) ? 2 : o->size * 2;
 	void **table;
 
 	if (sizeof (o->table[0]) * size < sizeof (o->table[0]) * o->size) {
