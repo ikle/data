@@ -53,3 +53,15 @@ int da_append (struct da *o, void *e)
 	o->data[o->count++] = e;
 	return 1;
 }
+
+int da_insert (struct da *o, size_t i, void *e, void free (void *o))
+{
+	if (i >= o->count) {
+		errno = EINVAL;
+		return 0;
+	}
+
+	free (o->data[i]);
+	o->data[i] = e;
+	return 1;
+}
