@@ -30,9 +30,6 @@ void da_fini (struct da *o, void entry_free (void *o))
 
 static int resize (struct da *o)
 {
-	if (o->count < o->avail)
-		return 1;
-
 	const size_t next = o->avail * 2 | 1;
 	void **data;
 
@@ -51,7 +48,7 @@ static int resize (struct da *o)
 
 int da_append (struct da *o, void *e)
 {
-	if (!resize (o))
+	if (o->count >= o->avail && !resize (o))
 		return 0;
 
 	o->data[o->count++] = e;
