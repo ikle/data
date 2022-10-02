@@ -14,7 +14,7 @@
 typedef void  *copy_fn (const void *from);
 typedef void   free_fn (void *o);
 typedef int    eq_fn   (const void *o, const void *peer);
-typedef size_t hash_fn (size_t iv, const void *o);
+typedef size_t hash_fn (const void *o, size_t iv);
 
 struct data_type {
 	copy_fn *copy;

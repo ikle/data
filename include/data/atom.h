@@ -20,7 +20,7 @@
 void  *atom_copy (const void *from);
 void   atom_free (void *o);
 int    atom_eq   (const void *o, const void *sample);
-size_t atom_hash (size_t iv, const void *o);
+size_t atom_hash (const void *o, size_t iv);
 
 const struct data_type atom_type;
 

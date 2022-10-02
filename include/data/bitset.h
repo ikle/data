@@ -17,7 +17,7 @@
 void  *bitset_copy (const void *from);
 void   bitset_free (void *o);
 int    bitset_eq   (const void *o, const void *sample);
-size_t bitset_hash (size_t iv, const void *o);
+size_t bitset_hash (const void *o, size_t iv);
 
 const struct data_type bitset_type;
 

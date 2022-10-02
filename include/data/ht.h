@@ -14,7 +14,7 @@
 void  *ht_copy (const void *from);
 void   ht_free (void *o);
 int    ht_eq   (const void *o, const void *sample);
-size_t ht_hash (size_t iv, const void *o);
+size_t ht_hash (const void *o, size_t iv);
 
 const struct data_type ht_type;
 

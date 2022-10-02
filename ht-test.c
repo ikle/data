@@ -21,7 +21,7 @@ static const struct data_type atom_good_type = {
 	.hash	= string_hash,
 };
 
-static size_t string_bad_hash (size_t iv, const void *o)
+static size_t string_bad_hash (const void *o, size_t iv)
 {
 	return *(const char *) o;  /* bad hash to test collisions */
 }
@@ -33,7 +33,7 @@ static const struct data_type atom_bad_type = {
 	.hash	= string_bad_hash,
 };
 
-static size_t string_very_bad_hash (size_t iv, const void *o)
+static size_t string_very_bad_hash (const void *o, size_t iv)
 {
 	return 0;  /* very bad hash to test collisions */
 }
@@ -75,7 +75,7 @@ static void do_test (const struct data_type *type)
 
 	ht_foreach (i, entry, &ht)
 		printf ("%2zu at %2zu: %s\n",
-			type->hash (0, ht.table[i]) & (ht.size - 1), i, entry);
+			type->hash (ht.table[i], 0) & (ht.size - 1), i, entry);
 
 	printf ("\nremove item #3: %s\n\n", strings [3]);
 
@@ -83,7 +83,7 @@ static void do_test (const struct data_type *type)
 
 	ht_foreach (i, entry, &ht)
 		printf ("%2zu at %2zu: %s\n",
-			type->hash (0, ht.table[i]) & (ht.size - 1), i, entry);
+			type->hash (ht.table[i], 0) & (ht.size - 1), i, entry);
 
 	ht_fini (&ht);
 }

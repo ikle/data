@@ -42,7 +42,7 @@ static size_t get_slot (const struct data_type *type, size_t size,
 	size_t i;
 
 	for (
-		i = type->hash (0, o) & mask;
+		i = type->hash (o, 0) & mask;
 		table[i] != NULL && !type->eq (table[i], o);
 		i = (i + 1) & mask
 	) {}

@@ -53,7 +53,7 @@ int ht_eq (const void *a, const void *b)
 	return 1;
 }
 
-size_t ht_hash (size_t iv, const void *o)
+size_t ht_hash (const void *o, size_t iv)
 {
 	const struct ht *p = o;
 	size_t i;
@@ -63,7 +63,7 @@ size_t ht_hash (size_t iv, const void *o)
 	 * Calculate order-independed hash from entries order
 	 */
 	ht_foreach (i, entry, p)
-		iv ^= p->type->hash (0, entry);
+		iv ^= p->type->hash (entry, 0);
 
 	return iv;
 }

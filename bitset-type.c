@@ -52,7 +52,7 @@ int bitset_eq (const void *a, const void *b)
 	return memcmp (p->set, q->set, p->count * sizeof (p->set[0])) == 0;
 }
 
-size_t bitset_hash (size_t iv, const void *o)
+size_t bitset_hash (const void *o, size_t iv)
 {
 	const struct bitset *p = o;
 

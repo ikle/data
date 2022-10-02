@@ -24,7 +24,7 @@ int atom_eq (const void *a, const void *b)
 	return a == b;
 }
 
-size_t atom_hash (size_t iv, const void *o)
+size_t atom_hash (const void *o, size_t iv)
 {
 	return hash (iv, &o, sizeof (o));
 }
