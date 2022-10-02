@@ -6,32 +6,11 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <data/hash.h>
 #include <data/atom.h>
 
-void *atom_copy (const void *from)
-{
-	return (void *) from;
-}
-
-void atom_free (void *o)
-{
-	/* nothing */
-}
-
-int atom_eq (const void *a, const void *b)
-{
-	return a == b;
-}
-
-size_t atom_hash (const void *o, size_t iv)
-{
-	return hash (iv, &o, sizeof (o));
-}
-
 const struct data_type atom_type = {
-	.copy	= atom_copy,
-	.free	= atom_free,
-	.eq	= atom_eq,
-	.hash	= atom_hash,
+	.copy	= (copy_fn *) atom_copy,
+	.free	= (free_fn *) atom_free,
+	.eq	= (eq_fn   *) atom_eq,
+	.hash	= (hash_fn *) atom_hash,
 };

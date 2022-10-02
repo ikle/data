@@ -15,9 +15,9 @@
 #include <data/string.h>
 
 static const struct data_type atom_good_type = {
-	.copy	= atom_copy,
-	.free	= atom_free,
-	.eq	= atom_eq,
+	.copy	= (copy_fn *) atom_copy,
+	.free	= (free_fn *) atom_free,
+	.eq	= (eq_fn   *) atom_eq,
 	.hash	= (hash_fn *) string_hash,
 };
 
@@ -27,9 +27,9 @@ static size_t string_bad_hash (const void *o, size_t iv)
 }
 
 static const struct data_type atom_bad_type = {
-	.copy	= atom_copy,
-	.free	= atom_free,
-	.eq	= atom_eq,
+	.copy	= (copy_fn *) atom_copy,
+	.free	= (free_fn *) atom_free,
+	.eq	= (eq_fn   *) atom_eq,
 	.hash	= string_bad_hash,
 };
 
@@ -39,9 +39,9 @@ static size_t string_very_bad_hash (const void *o, size_t iv)
 }
 
 static const struct data_type atom_very_bad_type = {
-	.copy	= atom_copy,
-	.free	= atom_free,
-	.eq	= atom_eq,
+	.copy	= (copy_fn *) atom_copy,
+	.free	= (free_fn *) atom_free,
+	.eq	= (eq_fn   *) atom_eq,
 	.hash	= string_very_bad_hash,
 };
 

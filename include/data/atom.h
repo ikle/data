@@ -9,6 +9,7 @@
 #ifndef COLIBRI_DATA_ATOM_H
 #define COLIBRI_DATA_ATOM_H  1
 
+#include <data/hash.h>
 #include <data/type.h>
 
 /*
@@ -17,14 +18,29 @@
  * exist.
  */
 
-void  *atom_copy (const void *from);
-void   atom_free (void *o);
-int    atom_eq   (const void *o, const void *sample);
-size_t atom_hash (const void *o, size_t iv);
+static inline void atom_free (const void *o)
+{
+	/* nothing */
+}
+
+static inline const void *atom_copy (const void *o)
+{
+	return o;
+}
+
+static inline int atom_eq (const void *o, const void *peer)
+{
+	return o == peer;
+}
 
 static inline int atom_cmp (const void *o, const void *peer)
 {
 	return o - peer;
+}
+
+static inline size_t atom_hash (const void *o, size_t iv)
+{
+	return hash (iv, &o, sizeof (o));
 }
 
 const struct data_type atom_type;
