@@ -10,10 +10,8 @@
 #include <stdlib.h>
 #include <string.h>
 
+#include <data/string.h>
 #include <data/vec.h>
-
-static inline void string_free (char *o)	{ free (o); }
-static inline char *string_copy (const char *o)	{ return strdup (o); }
 
 VEC_DECLARE_TYPED (string, char, const char)
 
@@ -44,18 +42,6 @@ int main (int argc, char *argv[])
 
 	string_vec_fini (&v);
 	return 0;
-}
-
-#include <data/hash.h>
-
-static inline int string_eq (const char *o, const char *peer)
-{
-	return strcmp (o, peer) == 0;
-}
-
-static inline size_t string_hash (const char *o, size_t iv)
-{
-	return hash (iv, o, strlen (o));
 }
 
 VEC_DEFINE_ALLOC (string)
