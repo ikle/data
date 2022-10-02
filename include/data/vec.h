@@ -104,6 +104,15 @@ static inline void name##_vec_sort (struct name##_vec *o)		\
 {									\
 	qsort (o->data, o->count, sizeof (o->data[0]), name##_compar);	\
 }									\
+									\
+static inline								\
+size_t name##_vec_search (const struct name##_vec *o, ctype *key)	\
+{									\
+	type **e = bsearch (&key, o->data, o->count,			\
+			    sizeof (o->data[0]), name##_compar);	\
+									\
+	return e == NULL ? -1 : (e - o->data);				\
+}									\
 
 #define VEC_DECLARE(name) \
 	VEC_DECLARE_TYPED(name, struct name, const struct name)
