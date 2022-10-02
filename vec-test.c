@@ -10,10 +10,7 @@
 #include <stdlib.h>
 #include <string.h>
 
-#include <data/string.h>
-#include <data/vec.h>
-
-VEC_DECLARE_TYPED (string, char, const char)
+#include <data/string-vec.h>
 
 static const char *list[] = {
 	"test string #1",
@@ -43,8 +40,3 @@ int main (int argc, char *argv[])
 	string_vec_fini (&v);
 	return 0;
 }
-
-VEC_DEFINE_ALLOC (string)
-VEC_DEFINE_COPY  (string)
-VEC_DEFINE_EQ    (string)
-VEC_DEFINE_HASH  (string)
