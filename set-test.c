@@ -38,7 +38,7 @@ int main (int argc, char *argv[])
 	string_set_init (&A);
 
 	for (i = 0; list[i] != NULL; ++i)
-		if (string_set_add (&A, list[i]) == NULL)
+		if (string_set_insert (&A, list[i]) == NULL)
 			fprintf (stderr, "W: cannot add '%s' to set\n",
 				 string_get (list[i]));
 
@@ -47,8 +47,8 @@ int main (int argc, char *argv[])
 	set_foreach (i, entry, &A)
 		printf ("%2zu: %s\n", i, entry);
 
-	string_set_del (&A, list[1]);
-	string_set_del (&A, list[3]);
+	string_set_remove (&A, list[1]);
+	string_set_remove (&A, list[3]);
 
 	printf ("\nA \\ {list[1], list[3]}:\n\n");
 

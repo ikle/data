@@ -11,80 +11,79 @@
 
 #include <data/ht.h>
 
-#define SET_DECLARE(Type)						\
+#define SET_DECLARE_TYPED(name, type, ctype)				\
 									\
-struct Type##_set {							\
+struct name##_set {							\
 	struct ht table;						\
 };									\
 									\
-static inline void Type##_set_init (struct Type##_set *o)		\
+static inline void name##_set_init (struct name##_set *o)		\
 {									\
-	ht_init (&o->table, &Type##_type);				\
+	ht_init (&o->table, &name##_type);				\
 }									\
 									\
-static inline void Type##_set_fini (struct Type##_set *o)		\
+static inline void name##_set_fini (struct name##_set *o)		\
 {									\
 	ht_fini (&o->table);						\
 }									\
 									\
-static inline struct Type##_set *Type##_set_clone (			\
-	const struct Type##_set *o					\
-)									\
+static inline								\
+struct name##_set *name##_set_copy (const struct name##_set *o)		\
 {									\
 	return ht_copy (o);						\
 }									\
 									\
-static inline int Type##_set_eq (const struct Type##_set *a,		\
-				 const struct Type##_set *b)		\
+static inline int name##_set_eq (const struct name##_set *a,		\
+				 const struct name##_set *b)		\
 {									\
 	return ht_eq (a, b);						\
 }									\
 									\
-static inline void Type##_set_clean (struct Type##_set *o)		\
+static inline void name##_set_clean (struct name##_set *o)		\
 {									\
 	ht_clean (&o->table);						\
 }									\
 									\
-static inline int Type##_set_is_member (struct Type##_set *o,		\
-					const struct Type *e)		\
+static inline int name##_set_is_member (struct name##_set *o, ctype *e)	\
 {									\
 	return ht_lookup (&o->table, e) != NULL;			\
 }									\
 									\
-static inline const struct Type *Type##_set_add (struct Type##_set *o,	\
-						 const struct Type *e)	\
+static inline ctype *name##_set_insert (struct name##_set *o, ctype *e)	\
 {									\
 	return ht_insert (&o->table, e, 0);				\
 }									\
 									\
-static inline void Type##_set_del (struct Type##_set *o,		\
-				   const struct Type *e)		\
+static inline void name##_set_remove (struct name##_set *o, ctype *e)	\
 {									\
 	ht_remove (&o->table, e);					\
 }									\
 									\
-static inline int Type##_set_join (struct Type##_set *o,		\
-				   const struct Type##_set *s)		\
+static inline int name##_set_join (struct name##_set *o,		\
+				   const struct name##_set *s)		\
 {									\
 	size_t i;							\
-	struct Type *entry;						\
+	type *entry;							\
 									\
 	ht_foreach (i, entry, &s->table)				\
-		if (Type##_set_add (o, entry) == NULL)			\
+		if (name##_set_insert (o, entry) == NULL)		\
 			return 0;					\
 									\
 	return 1;							\
 }									\
 									\
-static inline void Type##_set_diff (struct Type##_set *o,		\
-				    const struct Type##_set *s)		\
+static inline void name##_set_diff (struct name##_set *o,		\
+				    const struct name##_set *s)		\
 {									\
 	size_t i;							\
-	struct Type *entry;						\
+	type *entry;							\
 									\
 	ht_foreach (i, entry, &s->table)				\
-		Type##_set_del (o, entry);				\
+		name##_set_remove (o, entry);				\
 }
+
+#define SET_DECLARE(name) \
+	SET_DECLARE_TYPED (name, struct name, const struct name)
 
 #define set_foreach(i, entry, o)					\
 	for ((i) = 0; (i) < (o)->table.size; ++(i))			\
