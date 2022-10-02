@@ -41,13 +41,14 @@ int ht_eq (const void *a, const void *b)
 {
 	const struct ht *p = a, *q = b;
 	size_t i;
-	void *entry;
+	void *entry, *peer;
 
 	if (p->count != q->count || p->type != q->type)
 		return 0;
 
 	ht_foreach (i, entry, p)
-		if (!p->type->eq (entry, ht_lookup (q, entry)))
+		if ((peer = ht_lookup (q, entry)) == NULL ||
+		    !p->type->eq (entry, peer))
 			return 0;
 
 	return 1;
