@@ -16,6 +16,11 @@
 static inline void        atom_free (const void *o) {}
 static inline const void *atom_copy (const void *o) { return o; }
 
+static inline int atom_cmp (const void *o, const void *peer)
+{
+	return o - peer;
+}
+
 VEC_DECLARE_TYPED (atom, const void, const void)
 
 int vec_resize (struct atom_vec *o, size_t next)

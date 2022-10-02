@@ -32,6 +32,8 @@ int main (int argc, char *argv[])
 	for (i = 0; list[i] != NULL; ++i)
 		string_vec_append (&v, list[i]);
 
+	string_vec_sort (&v);
+
 	printf ("\ncount = %zu, avail = %zu\n\n", v.count, v.avail);
 
 	for (i = 0; i < v.count; ++i)

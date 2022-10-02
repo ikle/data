@@ -30,6 +30,11 @@ static inline int string_eq (const char *o, const char *peer)
 	return strcmp (o, peer) == 0;
 }
 
+static inline int string_cmp (const char *o, const char *peer)
+{
+	return strcoll (o, peer);
+}
+
 static inline size_t string_hash (const char *o, size_t iv)
 {
 	return hash (iv, o, strlen (o));

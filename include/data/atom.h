@@ -22,6 +22,11 @@ void   atom_free (void *o);
 int    atom_eq   (const void *o, const void *sample);
 size_t atom_hash (const void *o, size_t iv);
 
+static inline int atom_cmp (const void *o, const void *peer)
+{
+	return o - peer;
+}
+
 const struct data_type atom_type;
 
 #endif  /* COLIBRI_DATA_ATOM_H */

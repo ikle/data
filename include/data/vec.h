@@ -94,6 +94,16 @@ struct name##_vec *name##_vec_copy  (const struct name##_vec *o);	\
 int    name##_vec_eq   (const struct name##_vec *o,			\
 			const struct name##_vec *peer);			\
 size_t name##_vec_hash (const struct name##_vec *o, size_t iv);		\
+									\
+static inline int name##_compar (const void *a, const void *b)		\
+{									\
+	return name##_cmp (*(const void **) a, *(const void **) b);	\
+}									\
+									\
+static inline void name##_vec_sort (struct name##_vec *o)		\
+{									\
+	qsort (o->data, o->count, sizeof (o->data[0]), name##_compar);	\
+}									\
 
 #define VEC_DECLARE(name) \
 	VEC_DECLARE_TYPED(name, struct name, const struct name)
