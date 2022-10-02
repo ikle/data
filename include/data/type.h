@@ -11,11 +11,16 @@
 
 #include <stddef.h>
 
+typedef void  *copy_fn (const void *from);
+typedef void   free_fn (void *o);
+typedef int    eq_fn   (const void *o, const void *peer);
+typedef size_t hash_fn (size_t iv, const void *o);
+
 struct data_type {
-	void  *(*copy) (const void *from);
-	void   (*free) (void *o);
-	int    (*eq)   (const void *o, const void *sample);
-	size_t (*hash) (size_t iv, const void *o);
+	copy_fn *copy;
+	free_fn *free;
+	eq_fn   *eq;
+	hash_fn *hash;
 };
 
 #endif  /* COLIBRI_DATA_TYPE_H */
