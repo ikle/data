@@ -18,7 +18,7 @@ static const struct data_type atom_good_type = {
 	.copy	= atom_copy,
 	.free	= atom_free,
 	.eq	= atom_eq,
-	.hash	= string_hash,
+	.hash	= (hash_fn *) string_hash,
 };
 
 static size_t string_bad_hash (const void *o, size_t iv)
