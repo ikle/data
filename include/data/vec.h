@@ -1,7 +1,7 @@
 /*
  * Colibri Dynamic Array (Vector)
  *
- * Copyright (c) 2014-2022 Alexei A. Smekalkine
+ * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
