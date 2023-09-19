@@ -43,6 +43,6 @@ static inline size_t atom_hash (const void *o, size_t iv)
 	return hash (iv, &o, sizeof (o));
 }
 
-const struct data_type atom_type;
+extern const struct data_type atom_type;
 
 #endif  /* COLIBRI_DATA_ATOM_H */
