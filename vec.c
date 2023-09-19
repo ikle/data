@@ -14,7 +14,7 @@
 
 VEC_DECLARE_TYPED (atom, const void, const void)
 
-int vec_expand (struct atom_vec *o)
+int vec_expand (struct atom_vec *o, size_t size)
 {
 	const size_t next = o->avail * 2 | 1;
 
@@ -23,14 +23,14 @@ int vec_expand (struct atom_vec *o)
 		return 0;
 	}
 
-	return vec_resize (o, next);
+	return vec_resize (o, size, next);
 }
 
-int vec_resize (struct atom_vec *o, size_t next)
+int vec_resize (struct atom_vec *o, size_t size, size_t next)
 {
 	const void **data;
 
-	if ((data = realloc (o->data, sizeof (o->data[0]) * next)) == NULL)
+	if ((data = realloc (o->data, size * next)) == NULL)
 		return 0;
 
 	o->avail = next;

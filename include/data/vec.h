@@ -13,8 +13,8 @@
 
 struct atom_vec;
 
-int vec_resize (struct atom_vec *o, size_t size);
-int vec_expand (struct atom_vec *o);
+int vec_resize (struct atom_vec *o, size_t size, size_t avail);
+int vec_expand (struct atom_vec *o, size_t size);
 
 #define VEC_DECLARE_TYPED(name, type, ctype)				\
 									\
@@ -42,12 +42,12 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 									\
 static inline int name##_vec_resize (struct name##_vec *o, size_t next)	\
 {									\
-	return vec_resize ((void *) o, next);				\
+	return vec_resize ((void *) o, sizeof (type *), next);		\
 }									\
 									\
 static inline int name##_vec_expand (struct name##_vec *o)		\
 {									\
-	return vec_expand ((void *) o);					\
+	return vec_expand ((void *) o, sizeof (type *));		\
 }									\
 									\
 static inline								\

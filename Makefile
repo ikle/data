@@ -3,6 +3,6 @@ URL = https://github.com/ikle/data
 
 LIBNAME	= colibri-data
 LIBVER	= 0
-LIBREV	= 0.24
+LIBREV	= 0.25
 
 include make-core.mk
