@@ -1,7 +1,7 @@
 /*
  * Colibri Dynamic Array
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -16,10 +16,31 @@ struct da {
 	void **data;
 };
 
-void da_init (struct da *o);
-void da_fini (struct da *o, void free (void *o));
+static inline void da_init (struct da *o)
+{
+	o->count = 0;
+	o->avail = 0;
+	o->data  = NULL;
+}
+
+static inline void da_fini (struct da *o, void entry_free (void *o))
+{
+	size_t i;
+
+	for (i = 0; i < o->count; ++i)
+		entry_free (o->data[i]);
+
+	free (o->data);
+}
 
 int da_append (struct da *o, void *e);
-int da_insert (struct da *o, size_t i, void *e, void free (void *o));
+
+static inline
+int da_insert (struct da *o, size_t i, void *e, void entry_free (void *o))
+{
+	entry_free (o->data[i]);
+	o->data[i] = e;
+	return 1;
+}
 
 #endif  /* COLIBRI_DATA_DA_H */

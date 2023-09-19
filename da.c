@@ -1,7 +1,7 @@
 /*
  * Colibri Dynamic Array
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -10,23 +10,6 @@
 #include <stdlib.h>
 
 #include <data/da.h>
-
-void da_init (struct da *o)
-{
-	o->count = 0;
-	o->avail = 0;
-	o->data  = NULL;
-}
-
-void da_fini (struct da *o, void entry_free (void *o))
-{
-	size_t i;
-
-	for (i = 0; i < o->count; ++i)
-		entry_free (o->data[i]);
-
-	free (o->data);
-}
 
 static int da_resize (struct da *o, size_t next)
 {
@@ -51,12 +34,5 @@ int da_append (struct da *o, void *e)
 		return 0;
 
 	o->data[o->count++] = e;
-	return 1;
-}
-
-int da_insert (struct da *o, size_t i, void *e, void free (void *o))
-{
-	free (o->data[i]);
-	o->data[i] = e;
 	return 1;
 }
