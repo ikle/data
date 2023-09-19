@@ -14,7 +14,7 @@
 struct atom_vec;
 
 int vec_resize (struct atom_vec *o, size_t size);
-int vec_expand (struct atom_vec *o, size_t i);
+int vec_expand (struct atom_vec *o);
 
 #define VEC_DECLARE_TYPED(name, type, ctype)				\
 									\
@@ -45,9 +45,9 @@ static inline int name##_vec_resize (struct name##_vec *o, size_t next)	\
 	return vec_resize ((void *) o, next);				\
 }									\
 									\
-static inline int name##_vec_expand (struct name##_vec *o, size_t i)	\
+static inline int name##_vec_expand (struct name##_vec *o)		\
 {									\
-	return vec_expand ((void *) o, i);				\
+	return vec_expand ((void *) o);					\
 }									\
 									\
 static inline								\
@@ -59,8 +59,7 @@ void name##_vec_insert (struct name##_vec *o, size_t i, ctype *e)	\
 									\
 static inline int name##_vec_append (struct name##_vec *o, ctype *e)	\
 {									\
-	if (o->count >= o->avail &&					\
-	    !name##_vec_resize (o, o->avail * 2 | 1))			\
+	if (o->count >= o->avail && !name##_vec_expand (o))		\
 		return 0;						\
 									\
 	o->data[o->count++] = name##_copy (e);				\
@@ -76,8 +75,7 @@ void name##_vec_insert_nc (struct name##_vec *o, size_t i, type *e)	\
 									\
 static inline int name##_vec_append_nc (struct name##_vec *o, type *e)	\
 {									\
-	if (o->count >= o->avail &&					\
-	    !name##_vec_resize (o, o->avail * 2 | 1)) {			\
+	if (o->count >= o->avail && !name##_vec_expand (o)) {		\
 		name##_free (e);					\
 		return 0;						\
 	}								\
