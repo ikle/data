@@ -40,7 +40,7 @@ static inline size_t string_hash (const char *o, size_t iv)
 	return hash (iv, o, strlen (o));
 }
 
-const struct data_type string_type;
+extern const struct data_type string_type;
 
 struct string;
 
