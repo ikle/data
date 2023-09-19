@@ -20,7 +20,7 @@ int vec_expand (struct atom_vec *o, size_t size);
 									\
 struct name##_vec {							\
 	size_t count, avail;						\
-	type **data;							\
+	type *data;							\
 };									\
 									\
 static inline void name##_vec_init (struct name##_vec *o)		\
@@ -42,22 +42,22 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 									\
 static inline int name##_vec_resize (struct name##_vec *o, size_t next)	\
 {									\
-	return vec_resize ((void *) o, sizeof (type *), next);		\
+	return vec_resize ((void *) o, sizeof (type), next);		\
 }									\
 									\
 static inline int name##_vec_expand (struct name##_vec *o)		\
 {									\
-	return vec_expand ((void *) o, sizeof (type *));		\
+	return vec_expand ((void *) o, sizeof (type));			\
 }									\
 									\
 static inline								\
-void name##_vec_insert (struct name##_vec *o, size_t i, ctype *e)	\
+void name##_vec_insert (struct name##_vec *o, size_t i, ctype e)	\
 {									\
 	name##_free (o->data[i]);					\
 	o->data[i] = name##_copy (e);					\
 }									\
 									\
-static inline int name##_vec_append (struct name##_vec *o, ctype *e)	\
+static inline int name##_vec_append (struct name##_vec *o, ctype e)	\
 {									\
 	if (o->count >= o->avail && !name##_vec_expand (o))		\
 		return 0;						\
@@ -67,13 +67,13 @@ static inline int name##_vec_append (struct name##_vec *o, ctype *e)	\
 }									\
 									\
 static inline								\
-void name##_vec_insert_nc (struct name##_vec *o, size_t i, type *e)	\
+void name##_vec_insert_nc (struct name##_vec *o, size_t i, type e)	\
 {									\
 	name##_free (o->data[i]);					\
 	o->data[i] = e;							\
 }									\
 									\
-static inline int name##_vec_append_nc (struct name##_vec *o, type *e)	\
+static inline int name##_vec_append_nc (struct name##_vec *o, type e)	\
 {									\
 	if (o->count >= o->avail && !name##_vec_expand (o)) {		\
 		name##_free (e);					\
@@ -95,7 +95,7 @@ size_t name##_vec_hash (const struct name##_vec *o, size_t iv);		\
 									\
 static inline int name##_compar (const void *a, const void *b)		\
 {									\
-	return name##_cmp (*(const void **) a, *(const void **) b);	\
+	return name##_cmp (*(ctype *) a, *(ctype *) b);			\
 }									\
 									\
 static inline void name##_vec_sort (struct name##_vec *o)		\
@@ -104,16 +104,16 @@ static inline void name##_vec_sort (struct name##_vec *o)		\
 }									\
 									\
 static inline								\
-size_t name##_vec_search (const struct name##_vec *o, ctype *key)	\
+size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 {									\
-	type **e = bsearch (&key, o->data, o->count,			\
-			    sizeof (o->data[0]), name##_compar);	\
+	type *e = bsearch (&key, o->data, o->count,			\
+			   sizeof (o->data[0]), name##_compar);		\
 									\
 	return e == NULL ? -1 : (e - o->data);				\
 }									\
 
 #define VEC_DECLARE(name) \
-	VEC_DECLARE_TYPED(name, struct name, const struct name)
+	VEC_DECLARE_TYPED(name, struct name *, const struct name *)
 
 #define VEC_DEFINE_ALLOC(name)						\
 									\

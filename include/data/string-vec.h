@@ -1,7 +1,7 @@
 /*
  * Colibry String Vector Type
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -12,6 +12,6 @@
 #include <data/string.h>
 #include <data/vec.h>
 
-VEC_DECLARE_TYPED (string, char, const char)
+VEC_DECLARE_TYPED (string, char *, const char *)
 
 #endif  /* COLIBRI_DATA_STRING_VEC_H */

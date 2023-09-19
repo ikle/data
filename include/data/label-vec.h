@@ -1,7 +1,7 @@
 /*
  * Colibry Constant String Vector Type
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -12,6 +12,6 @@
 #include <data/label.h>
 #include <data/vec.h>
 
-VEC_DECLARE_TYPED (label, const char, const char)
+VEC_DECLARE_TYPED (label, const char *, const char *)
 
 #endif  /* COLIBRI_DATA_LABEL_VEC_H */

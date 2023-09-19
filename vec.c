@@ -12,7 +12,7 @@
 #include <data/atom.h>
 #include <data/vec.h>
 
-VEC_DECLARE_TYPED (atom, const void, const void)
+VEC_DECLARE_TYPED (atom, const void *, const void *)
 
 int vec_expand (struct atom_vec *o, size_t size)
 {
