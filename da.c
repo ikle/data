@@ -11,28 +11,28 @@
 
 #include <data/da.h>
 
-static int da_resize (struct da *o, size_t next)
+static bool da_resize (struct da *o, size_t next)
 {
 	void **data;
 
 	if (sizeof (o->data[0]) * next < sizeof (o->data[0]) * o->avail) {
 		errno = ENOMEM;
-		return 0;
+		return false;
 	}
 
 	if ((data = realloc (o->data, sizeof (o->data[0]) * next)) == NULL)
-		return 0;
+		return false;
 
 	o->avail = next;
 	o->data  = data;
-	return 1;
+	return true;
 }
 
-int da_append (struct da *o, void *e)
+bool da_append (struct da *o, void *e)
 {
 	if (o->count >= o->avail && !da_resize (o, o->avail * 2 | 1))
-		return 0;
+		return false;
 
 	o->data[o->count++] = e;
-	return 1;
+	return true;
 }

@@ -9,6 +9,7 @@
 #ifndef COLIBRI_DATA_DA_H
 #define COLIBRI_DATA_DA_H  1
 
+#include <stdbool.h>
 #include <stddef.h>
 
 struct da {
@@ -33,14 +34,14 @@ static inline void da_fini (struct da *o, void entry_free (void *o))
 	free (o->data);
 }
 
-int da_append (struct da *o, void *e);
+bool da_append (struct da *o, void *e);
 
 static inline
-int da_insert (struct da *o, size_t i, void *e, void entry_free (void *o))
+bool da_insert (struct da *o, size_t i, void *e, void entry_free (void *o))
 {
 	entry_free (o->data[i]);
 	o->data[i] = e;
-	return 1;
+	return true;
 }
 
 #endif  /* COLIBRI_DATA_DA_H */
