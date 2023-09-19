@@ -28,8 +28,9 @@ static inline void da_fini (struct da *o, void entry_free (void *o))
 {
 	size_t i;
 
-	for (i = 0; i < o->count; ++i)
-		entry_free (o->data[i]);
+	if (entry_free != NULL)
+		for (i = 0; i < o->count; ++i)
+			entry_free (o->data[i]);
 
 	free (o->data);
 }
@@ -39,7 +40,9 @@ bool da_append (struct da *o, void *e);
 static inline
 bool da_insert (struct da *o, size_t i, void *e, void entry_free (void *o))
 {
-	entry_free (o->data[i]);
+	if (entry_free != NULL)
+		entry_free (o->data[i]);
+
 	o->data[i] = e;
 	return true;
 }
