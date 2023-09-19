@@ -8,6 +8,7 @@
 
 #include <stdio.h>
 
+#include <data/int-vec.h>
 #include <data/label-vec.h>
 #include <data/string-vec.h>
 
@@ -67,6 +68,31 @@ static void string_vec_test (const char *list[], size_t k)
 	string_vec_fini (&v);
 }
 
+static const int nlist[] = { 1, 13, 3, 143, -17, 39, 40, 38, 0 };
+
+static void int_vec_test (const int list[], size_t k)
+{
+	struct int_vec v;
+	size_t i;
+
+	int_vec_init (&v);
+
+	for (i = 0; list[i] != 0; ++i)
+		int_vec_append (&v, list[i]);
+
+	int_vec_sort (&v);
+
+	printf ("\ncount = %zu, avail = %zu\n\n", v.count, v.avail);
+
+	for (i = 0; i < v.count; ++i)
+		printf ("%zu: %d\n", i, v.data[i]);
+
+	if ((i = int_vec_search (&v, list[k])) != -1)
+		printf ("\ninteger %zu '%d' found at %zu\n", k, list[k], i);
+
+	int_vec_fini (&v);
+}
+
 int main (int argc, char *argv[])
 {
 	size_t i;
@@ -78,5 +104,6 @@ int main (int argc, char *argv[])
 
 	label_vec_test  (list, 3);
 	string_vec_test (list, 4);
+	int_vec_test (nlist, 7);
 	return 0;
 }
