@@ -1,7 +1,7 @@
 /*
  * Small Allocator
  *
- * Copyright (c) 2008-2010,2019 Alexei A. Smekalkine <ikle@ikle.ru>
+ * Copyright (c) 2008-2023 Alexei A. Smekalkine <ikle@ikle.ru>
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -18,50 +18,50 @@
 #define DEF_ALIGNMENT	sizeof (long double)
 #endif
 
-#define ALIGN(x, mask)		(((x) + mask) & ~mask)
-
-#define BLOCK_SIZE		BUFSIZ
+#define SA_ALIGN(x, mask)	(((x) + mask) & ~mask)
+#define SA_BLOCK_SIZE		BUFSIZ
 
 struct sa_block {
 	struct sa_block *next;
 	char data[8];
 };
 
-static struct sa_block *alloc_block (void)
+static struct sa_block *sa_block_alloc (void)
 {
-	struct sa_block *p;
+	struct sa_block *o;
 
-	if ((p = malloc (BLOCK_SIZE)) == NULL)
-		return NULL;
+	if ((o = malloc (SA_BLOCK_SIZE)) == NULL)
+		return o;
 
-	p->next = NULL;
-	return p;
+	o->next = NULL;
+	return o;
 }
 
 struct sa_pool {
 	struct sa_block *head, *tail;
-	size_t end, mask;
+	size_t mask, end;
 };
 
 static int expand (struct sa_pool *o, size_t size)
 {
 	size_t start;
 
-	if ((o->end + size) <= BLOCK_SIZE)
+	if ((o->end + size) <= SA_BLOCK_SIZE)
 		return 1;
 
-	start = ALIGN (offsetof (struct sa_block, data), o->mask);
+	start = SA_ALIGN (offsetof (struct sa_block, data), o->mask);
 
-	if ((start + size) > BLOCK_SIZE) {
+	if ((start + size) > SA_BLOCK_SIZE) {
 		errno = EOVERFLOW;
 		return 0;
 	}
 
-	if (o->tail->next == NULL && (o->tail->next = alloc_block ()) == NULL)
+	if (o->tail->next == NULL &&
+	    (o->tail->next = sa_block_alloc ()) == NULL)
 		return 0;
 
 	o->tail = o->tail->next;
-	o->end = start;
+	o->end  = start;
 	return 1;
 }
 
@@ -78,16 +78,14 @@ struct sa_pool *sa_pool_alloc (unsigned align)
 	}
 
 	if ((o = malloc (sizeof (*o))) == NULL)
-		return NULL;
+		return o;
 
-	if ((o->head = alloc_block ()) == NULL)
+	if ((o->head = sa_block_alloc ()) == NULL)
 		goto no_block;
 
-	o->mask = align - 1;
-
 	o->tail = o->head;
-	o->end = ALIGN (offsetof (struct sa_block, data), o->mask);
-
+	o->mask = align - 1;
+	o->end  = SA_ALIGN (offsetof (struct sa_block, data), o->mask);
 	return o;
 no_block:
 	free (o);
@@ -116,8 +114,7 @@ void *sa_alloc (struct sa_pool *o, size_t size)
 	if (!expand (o, size))
 		return NULL;
 
-	p = (char *) o->tail + o->end;
-	o->end = ALIGN (o->end + size, o->mask);
-
+	p = (void *) o->tail + o->end;
+	o->end = SA_ALIGN (o->end + size, o->mask);
 	return p;
 }
