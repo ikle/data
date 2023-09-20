@@ -14,6 +14,7 @@
 
 struct atom_vec;
 
+bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
 bool vec_resize (struct atom_vec *o, size_t size, size_t avail);
 bool vec_expand (struct atom_vec *o, size_t size);
 
@@ -42,9 +43,9 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 }									\
 									\
 static inline								\
-bool name##_vec_resize (struct name##_vec *o, size_t next)		\
+bool name##_vec_resize_nc (struct name##_vec *o, size_t next)		\
 {									\
-	return vec_resize ((void *) o, sizeof (type), next);		\
+	return vec_resize_nc ((void *) o, sizeof (type), next);		\
 }									\
 									\
 static inline bool name##_vec_expand (struct name##_vec *o)		\
@@ -149,7 +150,7 @@ struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
 	if ((copy = name##_vec_alloc ()) == NULL)			\
 		return copy;						\
 									\
-	if (!name##_vec_resize (copy, o->avail))			\
+	if (!name##_vec_resize_nc (copy, o->avail))			\
 		goto no_resize;						\
 									\
 	for (i = 0; i < o->count; ++i)					\
@@ -172,7 +173,7 @@ struct name##_vec *name##_vec_copy  (const struct name##_vec *o)	\
 	if ((copy = name##_vec_alloc ()) == NULL)			\
 		return copy;						\
 									\
-	if (!name##_vec_resize (copy, o->avail))			\
+	if (!name##_vec_resize_nc (copy, o->avail))			\
 		goto no_resize;						\
 									\
 	for (i = 0; i < o->count; ++i) {				\

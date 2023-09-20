@@ -26,12 +26,17 @@ bool vec_expand (struct atom_vec *o, size_t size)
 
 bool vec_resize (struct atom_vec *o, size_t size, size_t next)
 {
-	const void **data;
-
 	if (next > ~(size_t) 0 / size) {
 		errno = ENOMEM;
 		return false;
 	}
+
+	return vec_resize_nc (o, size, next);
+}
+
+bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
+{
+	const void **data;
 
 	if ((data = realloc (o->data, size * next)) == NULL)
 		return false;
