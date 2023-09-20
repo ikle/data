@@ -18,7 +18,7 @@
  * exist.
  */
 
-UNIT_DECLARE_TYPED (atom, const void *, const void *, 1)
+UNIT_DECLARE_TYPED (atom, const void *, const void *, 0)
 
 extern const struct data_type atom_type;
 
