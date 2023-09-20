@@ -10,7 +10,7 @@
 
 #include <data/bh.h>
 
-static int cmp (const void *a, const void *b)
+static int gt (const void *a, const void *b)
 {
 	return a > b;
 }
@@ -24,7 +24,7 @@ int main (int argc, char *argv[])
 	struct bh o;
 	const int *p, *e;
 
-	bh_init (&o, cmp);
+	bh_init (&o, gt);
 
 	printf ("push");
 

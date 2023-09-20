@@ -12,16 +12,16 @@
 #include <stddef.h>
 
 struct bh {
-	int (*cmp) (const void *a, const void *b);
+	int (*gt) (const void *a, const void *b);
 	size_t count;	/* points to end of heap */
 	size_t tail;	/* points to end of pending objects queue */
 	size_t avail;	/* points to end of pool */
 	void **pool;
 };
 
-/* initialize heap object for a first use; cmp -- predicate, should return
+/* initialize heap object for a first use; gt -- predicate, should return
    nonzero if object a has higher priority over object b */
-void bh_init (struct bh *o, int (*cmp) (const void *a, const void *b));
+void bh_init (struct bh *o, int (*gt) (const void *a, const void *b));
 
 /* free all internal objects, call destructor (if not NULL) for each
    contained object */

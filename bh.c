@@ -18,9 +18,9 @@
 #define right(i)	(2 * (i) + 2)
 #define parent(i)	(((i) - 1) / 2)
 
-void bh_init (struct bh *o, int (*cmp) (const void *a, const void *b))
+void bh_init (struct bh *o, int (*gt) (const void *a, const void *b))
 {
-	o->cmp   = cmp;
+	o->gt    = gt;
 	o->avail = o->tail = o->count = 0;
 	o->pool  = NULL;
 }
@@ -66,7 +66,7 @@ static void bh_bubble_up (struct bh *o, size_t i)
 {
 	void *x = o->pool[i];
 
-	for (; i > root && o->cmp (x, o->pool[parent (i)]); i = parent (i))
+	for (; i > root && o->gt (x, o->pool[parent (i)]); i = parent (i))
 		o->pool[i] = o->pool[parent (i)];  /* pull down */
 
 	o->pool[i] = x;
@@ -78,7 +78,7 @@ static size_t bh_max_child (struct bh *o, size_t i)
 
 	return	l >= o->count ? 0 :  /* root cannot be child of any node */
 		r >= o->count ? l :
-		o->cmp (o->pool [l], o->pool [r]) ? l : r;
+		o->gt (o->pool [l], o->pool [r]) ? l : r;
 }
 
 static void bh_bubble_down (struct bh *o, size_t i)
@@ -89,7 +89,7 @@ static void bh_bubble_down (struct bh *o, size_t i)
 	for (
 		;
 		(child = bh_max_child (o, i)) != 0 &&
-		o->cmp (o->pool [child], x);
+		o->gt (o->pool [child], x);
 		i = child
 	)
 		o->pool[i] = o->pool[child];  /* pull up */
