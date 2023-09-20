@@ -1,7 +1,7 @@
 /*
  * Sequence: list, queue or stack
  *
- * Copyright (c) 2014-2021 Alexei A. Smekalkine
+ * Copyright (c) 2010-2021 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
