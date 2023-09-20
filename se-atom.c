@@ -1,7 +1,7 @@
 /*
  * Colibri S-Expressions
  *
- * Copyright (c) 2019-2021 Alexei A. Smekalkine
+ * Copyright (c) 2019-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -22,7 +22,7 @@ struct se_scope *se_scope_alloc (int flags)
 	struct se_scope *o;
 
 	if ((o = malloc (sizeof (*o))) == NULL)
-		return NULL;
+		return o;
 
 	if (!ht_init (&o->table, &string_type))
 		goto no_ht;
