@@ -1,7 +1,7 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015-2022 Alexei A. Smekalkine
+ * Copyright (c) 2015-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -12,7 +12,7 @@
 #include <stddef.h>
 
 struct bh {
-	int (*cmp) (void *a, void *b);
+	int (*cmp) (const void *a, const void *b);
 	size_t count;	/* points to end of heap */
 	size_t tail;	/* points to end of pending objects queue */
 	size_t avail;	/* points to end of pool */
@@ -21,7 +21,7 @@ struct bh {
 
 /* initialize heap object for a first use; cmp -- predicate, should return
    nonzero if object a has higher priority over object b */
-void bh_init (struct bh *o, int (*cmp) (void *a, void *b));
+void bh_init (struct bh *o, int (*cmp) (const void *a, const void *b));
 
 /* free all internal objects, call destructor (if not NULL) for each
    contained object */

@@ -1,7 +1,7 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015-2022 Alexei A. Smekalkine
+ * Copyright (c) 2015-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -10,7 +10,7 @@
 
 #include <data/bh.h>
 
-static int cmp (void *a, void *b)
+static int cmp (const void *a, const void *b)
 {
 	return a > b;
 }

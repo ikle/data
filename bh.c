@@ -1,7 +1,7 @@
 /*
  * Simple Binary Heap with Wait Queue
  *
- * Copyright (c) 2015-2022 Alexei A. Smekalkine
+ * Copyright (c) 2015-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -18,7 +18,7 @@
 #define right(i)	(2 * (i) + 2)
 #define parent(i)	(((i) - 1) / 2)
 
-void bh_init (struct bh *o, int (*cmp) (void *a, void *b))
+void bh_init (struct bh *o, int (*cmp) (const void *a, const void *b))
 {
 	o->cmp   = cmp;
 	o->avail = o->tail = o->count = 0;
