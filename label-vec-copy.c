@@ -8,4 +8,4 @@
 
 #include <data/label-vec.h>
 
-VEC_DEFINE_COPY (label)
+VEC_DEFINE_COPY_NC (label)
