@@ -1,7 +1,7 @@
 /*
  * Opening Addressing Hash Table test
  *
- * Copyright (c) 2017-2021 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -9,8 +9,8 @@
 #include <err.h>
 #include <stdio.h>
 
-#include <data/atom.h>
-#include <data/hash.h>
+#include <capsa/atom.h>
+#include <capsa/hash.h>
 #include <data/ht.h>
 #include <data/string.h>
 

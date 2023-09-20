@@ -1,13 +1,13 @@
 /*
- * Sequence: list, queue or stack
+ * Capsa Sequence: List, Queue or Stack
  *
- * Copyright (c) 2010-2021 Alexei A. Smekalkine
+ * Copyright (c) 2010-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_DATA_SEQ_H
-#define COLIBRI_DATA_SEQ_H  1
+#ifndef CAPSA_SEQ_H
+#define CAPSA_SEQ_H  1
 
 #include <assert.h>
 #include <stddef.h>
@@ -108,4 +108,4 @@ static inline int type##_seq_is_empty (struct type##_seq *s)		\
 	return s->head == NULL;						\
 }
 
-#endif  /* COLIBRI_DATA_SEQ_H */
+#endif  /* CAPSA_SEQ_H */

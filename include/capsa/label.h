@@ -1,17 +1,17 @@
 /*
- * Colibry Constant String Type
+ * Capsa Constant String Type
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_DATA_LABEL_H
-#define COLIBRI_DATA_LABEL_H  1
+#ifndef CAPSA_LABEL_H
+#define CAPSA_LABEL_H  1
 
 #include <string.h>
 
-#include <data/hash.h>
+#include <capsa/hash.h>
 
 static inline void label_free (const char *o)
 {
@@ -38,4 +38,4 @@ static inline size_t label_hash (const char *o, size_t iv)
 	return hash (iv, o, strlen (o));
 }
 
-#endif  /* COLIBRI_DATA_LABEL_H */
+#endif  /* CAPSA_LABEL_H */

@@ -1,16 +1,16 @@
 /*
- * Colibri Dynamic Array (Vector) Test
+ * Capsa Dynamic Array (Vector) Test
  *
- * Copyright (c) 2014-2022 Alexei A. Smekalkine
+ * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
 #include <stdio.h>
 
-#include <data/int-vec.h>
-#include <data/label-vec.h>
-#include <data/string-vec.h>
+#include <capsa/int-vec.h>
+#include <capsa/label-vec.h>
+#include <capsa/string-vec.h>
 
 static const char *list[] = {
 	"test string #1",

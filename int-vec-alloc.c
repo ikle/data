@@ -1,11 +1,11 @@
 /*
- * Colibry Integer Vector Allocator
+ * Capsa Integer Vector Allocator
  *
  * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <data/int-vec.h>
+#include <capsa/int-vec.h>
 
 VEC_DEFINE_ALLOC (int)

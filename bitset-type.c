@@ -1,7 +1,7 @@
 /*
- * Colibri Compact Binary Set Type
+ * Capsa Compact Binary Set Type
  *
- * Copyright (c) 2007-2021 Alexei A. Smekalkine
+ * Copyright (c) 2007-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -10,7 +10,7 @@
 #include <string.h>
 
 #include <data/bitset.h>
-#include <data/hash.h>
+#include <capsa/hash.h>
 
 void *bitset_copy (const void *from)
 {

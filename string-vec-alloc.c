@@ -1,11 +1,11 @@
 /*
- * Colibry String Vector Allocator
+ * Capsa String Vector Allocator
  *
- * Copyright (c) 2017-2022 Alexei A. Smekalkine
+ * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <data/string-vec.h>
+#include <capsa/string-vec.h>
 
 VEC_DEFINE_ALLOC (string)

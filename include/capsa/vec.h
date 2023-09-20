@@ -1,13 +1,13 @@
 /*
- * Colibri Dynamic Array (Vector)
+ * Capsa Dynamic Array (Vector)
  *
  * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_DATA_VEC_H
-#define COLIBRI_DATA_VEC_H  1
+#ifndef CAPSA_VEC_H
+#define CAPSA_VEC_H  1
 
 #include <stdlib.h>
 
@@ -218,4 +218,4 @@ size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
 	return iv;							\
 }									\
 
-#endif  /* COLIBRI_DATA_VEC_H */
+#endif  /* CAPSA_VEC_H */

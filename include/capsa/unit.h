@@ -1,15 +1,15 @@
 /*
- * Colibry Unit Types
+ * Capsa Unit Types
  *
  * Copyright (c) 2017-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#ifndef COLIBRI_DATA_UNIT_H
-#define COLIBRI_DATA_UNIT_H  1
+#ifndef CAPSA_UNIT_H
+#define CAPSA_UNIT_H  1
 
-#include <data/hash.h>
+#include <capsa/hash.h>
 
 #define UNIT_DECLARE_TYPED(name, type, ctype, intfit)	\
 							\
@@ -39,4 +39,4 @@ static inline size_t name##_hash (ctype o, size_t iv)	\
 	return hash (iv, &o, sizeof (o));		\
 }
 
-#endif  /* COLIBRI_DATA_UNIT_H */
+#endif  /* CAPSA_UNIT_H */

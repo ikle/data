@@ -1,5 +1,5 @@
 /*
- * Colibri Dynamic Array (Vector)
+ * Capsa Dynamic Array (Vector)
  *
  * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
@@ -9,8 +9,8 @@
 #include <errno.h>
 #include <stdlib.h>
 
-#include <data/atom.h>
-#include <data/vec.h>
+#include <capsa/atom.h>
+#include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (atom, const void *, const void *)
 
