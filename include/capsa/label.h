@@ -9,9 +9,8 @@
 #ifndef CAPSA_LABEL_H
 #define CAPSA_LABEL_H  1
 
-#include <string.h>
-
 #include <capsa/hash.h>
+#include <string.h>
 
 static inline void label_free (const char *o)
 {

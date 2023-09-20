@@ -6,11 +6,11 @@
  * SPDX-License-Identifier: BSD-2-Clause
  */
 
-#include <errno.h>
-#include <stdlib.h>
-
 #include <capsa/atom.h>
 #include <capsa/vec.h>
+
+#include <errno.h>
+#include <stdlib.h>
 
 VEC_DECLARE_TYPED (atom, const void *, const void *)
 

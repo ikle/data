@@ -9,10 +9,9 @@
 #ifndef CAPSA_STRING_H
 #define CAPSA_STRING_H  1
 
+#include <capsa/hash.h>
 #include <stdlib.h>
 #include <string.h>
-
-#include <capsa/hash.h>
 
 static inline void string_free (char *o)
 {
