@@ -89,7 +89,7 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 struct name##_vec *name##_vec_alloc (void);				\
 void name##_vec_free (struct name##_vec *o);				\
 									\
-struct name##_vec *name##_vec_copy  (const struct name##_vec *o);	\
+struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
 									\
 bool   name##_vec_eq   (const struct name##_vec *o,			\
 			const struct name##_vec *peer);			\
