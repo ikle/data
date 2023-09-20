@@ -10,7 +10,6 @@
 #include <stdio.h>
 
 #include <capsa/atom.h>
-#include <capsa/hash.h>
 #include <data/ht.h>
 #include <data/string.h>
 
