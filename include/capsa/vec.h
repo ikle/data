@@ -9,12 +9,13 @@
 #ifndef CAPSA_VEC_H
 #define CAPSA_VEC_H  1
 
+#include <capsa/types.h>
 #include <stdlib.h>
 
 struct atom_vec;
 
-int vec_resize (struct atom_vec *o, size_t size, size_t avail);
-int vec_expand (struct atom_vec *o, size_t size);
+bool vec_resize (struct atom_vec *o, size_t size, size_t avail);
+bool vec_expand (struct atom_vec *o, size_t size);
 
 #define VEC_DECLARE_TYPED(name, type, ctype)				\
 									\
@@ -40,12 +41,13 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 	free (o->data);							\
 }									\
 									\
-static inline int name##_vec_resize (struct name##_vec *o, size_t next)	\
+static inline								\
+bool name##_vec_resize (struct name##_vec *o, size_t next)		\
 {									\
 	return vec_resize ((void *) o, sizeof (type), next);		\
 }									\
 									\
-static inline int name##_vec_expand (struct name##_vec *o)		\
+static inline bool name##_vec_expand (struct name##_vec *o)		\
 {									\
 	return vec_expand ((void *) o, sizeof (type));			\
 }									\
@@ -57,13 +59,13 @@ void name##_vec_insert (struct name##_vec *o, size_t i, ctype e)	\
 	o->data[i] = name##_copy (e);					\
 }									\
 									\
-static inline int name##_vec_append (struct name##_vec *o, ctype e)	\
+static inline bool name##_vec_append (struct name##_vec *o, ctype e)	\
 {									\
 	if (o->count >= o->avail && !name##_vec_expand (o))		\
-		return 0;						\
+		return false;						\
 									\
 	o->data[o->count++] = name##_copy (e);				\
-	return 1;							\
+	return true;							\
 }									\
 									\
 static inline								\
@@ -73,15 +75,15 @@ void name##_vec_insert_nc (struct name##_vec *o, size_t i, type e)	\
 	o->data[i] = e;							\
 }									\
 									\
-static inline int name##_vec_append_nc (struct name##_vec *o, type e)	\
+static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 {									\
 	if (o->count >= o->avail && !name##_vec_expand (o)) {		\
 		name##_free (e);					\
-		return 0;						\
+		return false;						\
 	}								\
 									\
 	o->data[o->count++] = e;					\
-	return 1;							\
+	return true;							\
 }									\
 									\
 struct name##_vec *name##_vec_alloc (void);				\
@@ -89,7 +91,7 @@ void name##_vec_free (struct name##_vec *o);				\
 									\
 struct name##_vec *name##_vec_copy  (const struct name##_vec *o);	\
 									\
-int    name##_vec_eq   (const struct name##_vec *o,			\
+bool   name##_vec_eq   (const struct name##_vec *o,			\
 			const struct name##_vec *peer);			\
 size_t name##_vec_hash (const struct name##_vec *o, size_t iv);		\
 									\
@@ -191,19 +193,19 @@ no_resize:								\
 
 #define VEC_DEFINE_EQ(name)						\
 									\
-int name##_vec_eq (const struct name##_vec *o,				\
-		   const struct name##_vec *peer)			\
+bool name##_vec_eq (const struct name##_vec *o,				\
+		    const struct name##_vec *peer)			\
 {									\
 	size_t i;							\
 									\
 	if (o->count != peer->count)					\
-		return 0;						\
+		return false;						\
 									\
 	for (i = 0; i < o->count; ++i)					\
 		if (!name##_eq (o->data[i], peer->data[i]))		\
-			return 0;					\
+			return false;					\
 									\
-	return 1;							\
+	return true;							\
 }									\
 
 #define VEC_DEFINE_HASH(name)						\

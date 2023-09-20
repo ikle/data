@@ -23,7 +23,7 @@ static inline const char *label_copy (const char *o)
 	return o;
 }
 
-static inline int label_eq (const char *o, const char *peer)
+static inline bool label_eq (const char *o, const char *peer)
 {
 	return strcmp (o, peer) == 0;
 }

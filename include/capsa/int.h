@@ -11,6 +11,6 @@
 
 #include <capsa/unit.h>
 
-UNIT_DECLARE_TYPED (int, int, int, 1)
+UNIT_DECLARE_TYPED (int, int, int, true)
 
 #endif  /* CAPSA_INT_H */

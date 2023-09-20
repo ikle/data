@@ -23,7 +23,7 @@ static inline type name##_copy (ctype o)		\
 	return o;					\
 }							\
 							\
-static inline int name##_eq (ctype o, ctype peer)	\
+static inline bool name##_eq (ctype o, ctype peer)	\
 {							\
 	return o == peer;				\
 }							\

@@ -24,7 +24,7 @@ static inline char *string_copy (const char *o)
 	return strdup (o);
 }
 
-static inline int string_eq (const char *o, const char *peer)
+static inline bool string_eq (const char *o, const char *peer)
 {
 	return strcmp (o, peer) == 0;
 }

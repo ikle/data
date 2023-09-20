@@ -9,7 +9,7 @@
 #ifndef CAPSA_HASH_H
 #define CAPSA_HASH_H  1
 
-#include <stddef.h>
+#include <capsa/types.h>
 
 size_t hash (size_t iv, const void *data, size_t size);
 
