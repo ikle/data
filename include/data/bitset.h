@@ -1,7 +1,7 @@
 /*
  * Colibri Compact Binary Set
  *
- * Copyright (c) 2007-2021 Alexei A. Smekalkine
+ * Copyright (c) 2007-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -19,7 +19,7 @@ void   bitset_free (void *o);
 int    bitset_eq   (const void *o, const void *sample);
 size_t bitset_hash (const void *o, size_t iv);
 
-const struct data_type bitset_type;
+extern const struct data_type bitset_type;
 
 struct bitset {
 	size_t count;	/* number of allocated words */
