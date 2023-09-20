@@ -8,4 +8,4 @@
 
 #include <data/int-vec.h>
 
-VEC_DEFINE_COPY (int)
+VEC_DEFINE_COPY_NC (int)

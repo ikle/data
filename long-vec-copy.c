@@ -8,4 +8,4 @@
 
 #include <data/long-vec.h>
 
-VEC_DEFINE_COPY (long)
+VEC_DEFINE_COPY_NC (long)

@@ -137,6 +137,29 @@ void name##_vec_free (struct name##_vec *o)				\
 	free (o);							\
 }									\
 
+#define VEC_DEFINE_COPY_NC(name)					\
+									\
+struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
+{									\
+	struct name##_vec *copy;					\
+	size_t i;							\
+									\
+	if ((copy = name##_vec_alloc ()) == NULL)			\
+		return copy;						\
+									\
+	if (!name##_vec_resize (copy, o->avail))			\
+		goto no_resize;						\
+									\
+	for (i = 0; i < o->count; ++i)					\
+		copy->data[i] = name##_copy (o->data[i]);		\
+									\
+	copy->count = i;						\
+	return copy;							\
+no_resize:								\
+	name##_vec_free (copy);						\
+	return NULL;							\
+}									\
+
 #define VEC_DEFINE_COPY(name)						\
 									\
 struct name##_vec *name##_vec_copy  (const struct name##_vec *o)	\
