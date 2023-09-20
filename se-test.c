@@ -1,3 +1,11 @@
+/*
+ * S-Expressions Test
+ *
+ * Copyright (c) 2019-2023 Alexei A. Smekalkine
+ *
+ * SPDX-License-Identifier: BSD-2-Clause
+ */
+
 #include <err.h>
 #include <stdio.h>
 

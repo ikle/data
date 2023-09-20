@@ -1,7 +1,7 @@
 /*
- * S-Expressions, destructor
+ * S-Expressions: Pair
  *
- * Copyright (c) 2019 Alexei A. Smekalkine
+ * Copyright (c) 2019-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
