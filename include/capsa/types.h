@@ -9,6 +9,7 @@
 #ifndef CAPSA_TYPES_H
 #define CAPSA_TYPES_H  1
 
+#include <limits.h>
 #include <stdbool.h>
 #include <stddef.h>
 #include <stdint.h>
