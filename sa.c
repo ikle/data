@@ -7,7 +7,6 @@
  */
 
 #include <errno.h>
-#include <stdio.h>
 #include <stdlib.h>
 
 #include <data/sa.h>
@@ -19,7 +18,7 @@
 #endif
 
 #define SA_ALIGN(x, mask)	(((x) + mask) & ~mask)
-#define SA_BLOCK_SIZE		BUFSIZ
+#define SA_BLOCK_SIZE		4096
 
 struct sa_block {
 	struct sa_block *next;
