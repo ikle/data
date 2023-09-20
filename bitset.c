@@ -1,7 +1,7 @@
 /*
  * Colibry Compact Binary Set
  *
- * Copyright (c) 2007-2021 Alexei A. Smekalkine
+ * Copyright (c) 2007-2023 Alexei A. Smekalkine
  *
  * SPDX-License-Identifier: BSD-2-Clause
  */
@@ -75,10 +75,10 @@ void bitset_del (struct bitset *o, size_t x)
 	const size_t pos = x / size;
 	const size_t bit = x % size;
 
-	if (pos < o->count)
+	if (pos < o->count) {
 		o->set[pos] &= ~(1UL << bit);
-
-	bitset_shrink (o);
+		bitset_shrink (o);
+	}
 }
 
 /* o = o U s */
