@@ -14,6 +14,8 @@
 
 struct atom_vec;
 
+struct atom_vec *vec_alloc (void);
+
 bool vec_expand    (struct atom_vec *o, size_t size);
 bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
 
@@ -39,6 +41,11 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 		name##_free (o->data[i]);				\
 									\
 	free (o->data);							\
+}									\
+									\
+static inline struct name##_vec *name##_vec_alloc (void)		\
+{									\
+	return (void *) vec_alloc ();					\
 }									\
 									\
 static inline void name##_vec_free (struct name##_vec *o)		\
@@ -95,8 +102,6 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 	return true;							\
 }									\
 									\
-struct name##_vec *name##_vec_alloc (void);				\
-									\
 struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
 									\
 bool   name##_vec_eq   (const struct name##_vec *o,			\
@@ -124,19 +129,6 @@ size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 
 #define VEC_DECLARE(name) \
 	VEC_DECLARE_TYPED(name, struct name *, const struct name *)
-
-#define VEC_DEFINE_ALLOC(name)						\
-									\
-struct name##_vec *name##_vec_alloc (void)				\
-{									\
-	struct name##_vec *o;						\
-									\
-	if ((o = malloc (sizeof (*o))) == NULL)				\
-		return o;						\
-									\
-	name##_vec_init (o);						\
-	return o;							\
-}									\
 
 #define VEC_DEFINE_COPY_NC(name)					\
 									\
