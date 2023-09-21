@@ -14,14 +14,16 @@
 
 VEC_DECLARE_TYPED (atom, const void *, const void *)
 
-bool vec_expand (struct atom_vec *o, size_t size)
+bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
 {
-	if (o->avail == ~(size_t) 0) {
-		errno = ENOMEM;
-		return false;
-	}
+	const void **data;
 
-	return vec_resize (o, size, o->avail * 2 | 1);
+	if ((data = realloc (o->data, size * next)) == NULL)
+		return false;
+
+	o->avail = next;
+	o->data  = data;
+	return true;
 }
 
 bool vec_resize (struct atom_vec *o, size_t size, size_t next)
@@ -34,14 +36,12 @@ bool vec_resize (struct atom_vec *o, size_t size, size_t next)
 	return vec_resize_nc (o, size, next);
 }
 
-bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
+bool vec_expand (struct atom_vec *o, size_t size)
 {
-	const void **data;
-
-	if ((data = realloc (o->data, size * next)) == NULL)
+	if (o->avail == ~(size_t) 0) {
+		errno = ENOMEM;
 		return false;
+	}
 
-	o->avail = next;
-	o->data  = data;
-	return true;
+	return vec_resize (o, size, o->avail * 2 | 1);
 }
