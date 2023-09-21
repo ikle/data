@@ -41,6 +41,15 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 	free (o->data);							\
 }									\
 									\
+static inline void name##_vec_free (struct name##_vec *o)		\
+{									\
+	if (o == NULL)							\
+		return;							\
+									\
+	name##_vec_fini (o);						\
+	free (o);							\
+}									\
+									\
 static inline								\
 bool name##_vec_resize_nc (struct name##_vec *o, size_t next)		\
 {									\
@@ -87,7 +96,6 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 }									\
 									\
 struct name##_vec *name##_vec_alloc (void);				\
-void name##_vec_free (struct name##_vec *o);				\
 									\
 struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
 									\
@@ -128,15 +136,6 @@ struct name##_vec *name##_vec_alloc (void)				\
 									\
 	name##_vec_init (o);						\
 	return o;							\
-}									\
-									\
-void name##_vec_free (struct name##_vec *o)				\
-{									\
-	if (o == NULL)							\
-		return;							\
-									\
-	name##_vec_fini (o);						\
-	free (o);							\
 }									\
 
 #define VEC_DEFINE_COPY_NC(name)					\
