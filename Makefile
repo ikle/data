@@ -3,6 +3,6 @@ URL = https://github.com/ikle/data
 
 LIBNAME	= capsa
 LIBVER	= 0
-LIBREV	= 0.32
+LIBREV	= 0.33
 
 include make-core.mk
