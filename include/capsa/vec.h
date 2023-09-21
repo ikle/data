@@ -58,12 +58,6 @@ static inline void name##_vec_free (struct name##_vec *o)		\
 	free (o);							\
 }									\
 									\
-static inline								\
-bool name##_vec_resize_nc (struct name##_vec *o, size_t next)		\
-{									\
-	return vec_resize_nc ((void *) o, sizeof (type), next);		\
-}									\
-									\
 static inline bool name##_vec_expand (struct name##_vec *o)		\
 {									\
 	return vec_expand ((void *) o, sizeof (type));			\
@@ -151,7 +145,7 @@ struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
 	if ((copy = name##_vec_alloc ()) == NULL)			\
 		return copy;						\
 									\
-	if (!name##_vec_resize_nc (copy, o->avail))			\
+	if (!vec_resize_nc ((void *) copy, sizeof (o->data[0]), o->avail))	\
 		goto no_resize;						\
 									\
 	for (i = 0; i < o->count; ++i) {				\
