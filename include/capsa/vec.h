@@ -155,7 +155,7 @@ no_resize:								\
 
 #define VEC_DEFINE_COPY(name)						\
 									\
-struct name##_vec *name##_vec_copy  (const struct name##_vec *o)	\
+struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
 {									\
 	struct name##_vec *copy;					\
 	size_t i;							\
