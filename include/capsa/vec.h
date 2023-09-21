@@ -15,6 +15,7 @@
 struct atom_vec;
 
 struct atom_vec *vec_alloc (void);
+void *unit_vec_copy (const struct atom_vec *o, size_t size);
 
 bool vec_expand    (struct atom_vec *o, size_t size);
 bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
@@ -102,8 +103,6 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 	return true;							\
 }									\
 									\
-struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
-									\
 bool   name##_vec_eq   (const struct name##_vec *o,			\
 			const struct name##_vec *peer);			\
 size_t name##_vec_hash (const struct name##_vec *o, size_t iv);		\
@@ -130,28 +129,17 @@ size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 #define VEC_DECLARE(name) \
 	VEC_DECLARE_TYPED(name, struct name *, const struct name *)
 
-#define VEC_DEFINE_COPY_NC(name)					\
+#define VEC_DECLARE_UNIT_COPY(name)					\
 									\
+static inline								\
 struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
 {									\
-	struct name##_vec *copy;					\
-	size_t i;							\
-									\
-	if ((copy = name##_vec_alloc ()) == NULL)			\
-		return copy;						\
-									\
-	if (!name##_vec_resize_nc (copy, o->avail))			\
-		goto no_resize;						\
-									\
-	for (i = 0; i < o->count; ++i)					\
-		copy->data[i] = name##_copy (o->data[i]);		\
-									\
-	copy->count = i;						\
-	return copy;							\
-no_resize:								\
-	name##_vec_free (copy);						\
-	return NULL;							\
+	return unit_vec_copy ((void *) o, sizeof (o->data[0]));		\
 }									\
+
+#define VEC_DECLARE_COPY(name)						\
+									\
+struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
 
 #define VEC_DEFINE_COPY(name)						\
 									\

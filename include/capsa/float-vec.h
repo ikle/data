@@ -13,5 +13,6 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (float, float, float)
+VEC_DECLARE_UNIT_COPY (float)
 
 #endif  /* CAPSA_FLOAT_VEC_H */

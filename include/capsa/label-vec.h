@@ -13,5 +13,6 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (label, const char *, const char *)
+VEC_DECLARE_UNIT_COPY (label)
 
 #endif  /* CAPSA_LABEL_VEC_H */

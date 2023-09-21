@@ -13,5 +13,6 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (string, char *, const char *)
+VEC_DECLARE_COPY (string)
 
 #endif  /* CAPSA_STRING_VEC_H */

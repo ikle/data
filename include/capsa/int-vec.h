@@ -13,5 +13,6 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (int, int, int)
+VEC_DECLARE_UNIT_COPY (int)
 
 #endif  /* CAPSA_INT_VEC_H */
