@@ -26,7 +26,7 @@ bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
 	return true;
 }
 
-bool vec_resize (struct atom_vec *o, size_t size, size_t next)
+static bool vec_resize (struct atom_vec *o, size_t size, size_t next)
 {
 	if (next > ~(size_t) 0 / size) {
 		errno = ENOMEM;
