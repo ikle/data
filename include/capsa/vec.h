@@ -99,7 +99,17 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 									\
 bool   name##_vec_eq   (const struct name##_vec *o,			\
 			const struct name##_vec *peer);			\
-size_t name##_vec_hash (const struct name##_vec *o, size_t iv);		\
+									\
+static inline								\
+size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
+{									\
+	size_t i;							\
+									\
+	for (i = 0; i < o->count; ++i)					\
+		iv = name##_hash (o->data[i], iv);			\
+									\
+	return iv;							\
+}									\
 									\
 static inline int name##_compar (const void *a, const void *b)		\
 {									\
@@ -179,18 +189,6 @@ bool name##_vec_eq (const struct name##_vec *o,				\
 			return false;					\
 									\
 	return true;							\
-}									\
-
-#define VEC_DEFINE_HASH(name)						\
-									\
-size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
-{									\
-	size_t i;							\
-									\
-	for (i = 0; i < o->count; ++i)					\
-		iv = name##_hash (o->data[i], iv);			\
-									\
-	return iv;							\
 }									\
 
 #endif  /* CAPSA_VEC_H */
