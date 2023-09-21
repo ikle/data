@@ -14,7 +14,7 @@
 
 struct atom_vec;
 
-struct atom_vec *vec_alloc (void);
+void *unit_vec_alloc (void);
 void *unit_vec_copy (const struct atom_vec *o, size_t size);
 
 bool vec_expand    (struct atom_vec *o, size_t size);
@@ -46,7 +46,7 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 									\
 static inline struct name##_vec *name##_vec_alloc (void)		\
 {									\
-	return (void *) vec_alloc ();					\
+	return unit_vec_alloc ();					\
 }									\
 									\
 static inline void name##_vec_free (struct name##_vec *o)		\

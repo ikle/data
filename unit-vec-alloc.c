@@ -1,5 +1,5 @@
 /*
- * Capsa Generic Vector Allocator
+ * Capsa Unit Vector Allocator
  *
  * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
@@ -13,7 +13,7 @@
 
 VEC_DECLARE_TYPED (atom, const void *, const void *)
 
-struct atom_vec *vec_alloc (void)
+void *vec_alloc (void)
 {
 	struct atom_vec *o;
 
