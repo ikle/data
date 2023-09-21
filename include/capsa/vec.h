@@ -46,7 +46,13 @@ static inline void name##_vec_fini (struct name##_vec *o)		\
 									\
 static inline struct name##_vec *name##_vec_alloc (void)		\
 {									\
-	return unit_vec_alloc ();					\
+	struct name##_vec *o;						\
+									\
+	if ((o = malloc (sizeof (*o))) == NULL)				\
+		return o;						\
+									\
+	name##_vec_init (o);						\
+	return o;							\
 }									\
 									\
 static inline void name##_vec_free (struct name##_vec *o)		\
