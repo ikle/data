@@ -58,6 +58,33 @@ static inline void name##_vec_free (struct name##_vec *o)		\
 	free (o);							\
 }									\
 									\
+static inline								\
+bool name##_vec_eq (const struct name##_vec *o,				\
+		    const struct name##_vec *peer)			\
+{									\
+	size_t i;							\
+									\
+	if (o->count != peer->count)					\
+		return false;						\
+									\
+	for (i = 0; i < o->count; ++i)					\
+		if (!name##_eq (o->data[i], peer->data[i]))		\
+			return false;					\
+									\
+	return true;							\
+}									\
+									\
+static inline								\
+size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
+{									\
+	size_t i;							\
+									\
+	for (i = 0; i < o->count; ++i)					\
+		iv = name##_hash (o->data[i], iv);			\
+									\
+	return iv;							\
+}									\
+									\
 static inline bool name##_vec_expand (struct name##_vec *o)		\
 {									\
 	return vec_expand ((void *) o, sizeof (type));			\
@@ -95,33 +122,6 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 									\
 	o->data[o->count++] = e;					\
 	return true;							\
-}									\
-									\
-static inline								\
-bool name##_vec_eq (const struct name##_vec *o,				\
-		    const struct name##_vec *peer)			\
-{									\
-	size_t i;							\
-									\
-	if (o->count != peer->count)					\
-		return false;						\
-									\
-	for (i = 0; i < o->count; ++i)					\
-		if (!name##_eq (o->data[i], peer->data[i]))		\
-			return false;					\
-									\
-	return true;							\
-}									\
-									\
-static inline								\
-size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
-{									\
-	size_t i;							\
-									\
-	for (i = 0; i < o->count; ++i)					\
-		iv = name##_hash (o->data[i], iv);			\
-									\
-	return iv;							\
 }									\
 									\
 static inline int name##_compar (const void *a, const void *b)		\
