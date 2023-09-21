@@ -81,6 +81,23 @@ bool name##_vec_eq (const struct name##_vec *o,				\
 }									\
 									\
 static inline								\
+int name##_vec_cmp (const struct name##_vec *o,				\
+		    const struct name##_vec *p)				\
+{									\
+	const size_t min = o->count < p->count ? o->count : p->count;	\
+	size_t i;							\
+	int c;								\
+									\
+	for (i = 0; i < min; ++i)					\
+		if ((c = name##_cmp (o->data[i], p->data[i])) < 0)	\
+			return -1;					\
+		else if (c > 0)						\
+			return +1;					\
+									\
+	return o->count > min ? +1 : p->count > min ? -1 : 0;		\
+}									\
+									\
+static inline								\
 size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
 {									\
 	size_t i;							\
