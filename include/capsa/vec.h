@@ -97,8 +97,21 @@ static inline bool name##_vec_append_nc (struct name##_vec *o, type e)	\
 	return true;							\
 }									\
 									\
-bool   name##_vec_eq   (const struct name##_vec *o,			\
-			const struct name##_vec *peer);			\
+static inline								\
+bool name##_vec_eq (const struct name##_vec *o,				\
+		    const struct name##_vec *peer)			\
+{									\
+	size_t i;							\
+									\
+	if (o->count != peer->count)					\
+		return false;						\
+									\
+	for (i = 0; i < o->count; ++i)					\
+		if (!name##_eq (o->data[i], peer->data[i]))		\
+			return false;					\
+									\
+	return true;							\
+}									\
 									\
 static inline								\
 size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
@@ -172,23 +185,6 @@ no_copy:								\
 no_resize:								\
 	name##_vec_free (copy);						\
 	return NULL;							\
-}									\
-
-#define VEC_DEFINE_EQ(name)						\
-									\
-bool name##_vec_eq (const struct name##_vec *o,				\
-		    const struct name##_vec *peer)			\
-{									\
-	size_t i;							\
-									\
-	if (o->count != peer->count)					\
-		return false;						\
-									\
-	for (i = 0; i < o->count; ++i)					\
-		if (!name##_eq (o->data[i], peer->data[i]))		\
-			return false;					\
-									\
-	return true;							\
 }									\
 
 #endif  /* CAPSA_VEC_H */
