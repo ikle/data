@@ -171,14 +171,14 @@ bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
 {									\
 	size_t i;							\
 									\
-	if ((d->data = malloc (s->avail * sizeof (s->data[0]))) == NULL)	\
+	if ((d->data = malloc (s->avail * sizeof (type))) == NULL)	\
 		return false;						\
 									\
 	for (i = 0; i < s->count; ++i)					\
 		if (!name##_copy (s->data + i, d->data + i))		\
 			goto no_copy;					\
 									\
-	d->count = i;							\
+	d->count = s->count;						\
 	d->avail = s->avail;						\
 	return true;							\
 no_copy:								\
