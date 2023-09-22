@@ -17,7 +17,6 @@ struct atom_vec;
 void *unit_vec_alloc (void);
 
 bool vec_expand    (struct atom_vec *o, size_t size);
-bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
 
 #define VEC_DECLARE_TYPED(name, type, ctype)				\
 									\

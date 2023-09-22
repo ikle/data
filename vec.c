@@ -14,7 +14,7 @@
 
 VEC_DECLARE_TYPED (atom, const void *, const void *)
 
-bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
+static bool vec_resize_nc (struct atom_vec *o, size_t size, size_t next)
 {
 	const void **data;
 
