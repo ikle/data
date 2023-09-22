@@ -107,6 +107,27 @@ size_t name##_vec_hash (const struct name##_vec *o, size_t iv)		\
 	return iv;							\
 }									\
 									\
+static inline								\
+bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
+{									\
+	size_t i;							\
+									\
+	if ((d->data = malloc (s->avail * sizeof (type))) == NULL)	\
+		return false;						\
+									\
+	for (i = 0; i < s->count; ++i)					\
+		if (!name##_copy (s->data + i, d->data + i))		\
+			goto no_copy;					\
+									\
+	d->count = s->count;						\
+	d->avail = s->avail;						\
+	return true;							\
+no_copy:								\
+	d->count = i;							\
+	name##_vec_fini (d);						\
+	return false;							\
+}									\
+									\
 static inline bool name##_vec_expand (struct name##_vec *o)		\
 {									\
 	return vec_expand ((void *) o, sizeof (type));			\
@@ -164,27 +185,6 @@ size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 			   sizeof (o->data[0]), name##_compar);		\
 									\
 	return e == NULL ? -1 : (e - o->data);				\
-}									\
-									\
-static inline								\
-bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
-{									\
-	size_t i;							\
-									\
-	if ((d->data = malloc (s->avail * sizeof (type))) == NULL)	\
-		return false;						\
-									\
-	for (i = 0; i < s->count; ++i)					\
-		if (!name##_copy (s->data + i, d->data + i))		\
-			goto no_copy;					\
-									\
-	d->count = s->count;						\
-	d->avail = s->avail;						\
-	return true;							\
-no_copy:								\
-	d->count = i;							\
-	name##_vec_fini (d);						\
-	return false;							\
 }									\
 
 #define VEC_DECLARE(name) \
