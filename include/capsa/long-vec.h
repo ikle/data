@@ -13,6 +13,5 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (long, long, long)
-VEC_DECLARE_UNIT_COPY (long)
 
 #endif  /* CAPSA_LONG_VEC_H */

@@ -15,7 +15,6 @@
 struct atom_vec;
 
 void *unit_vec_alloc (void);
-bool unit_vec_copy (const struct atom_vec *s, struct atom_vec *d, size_t size);
 
 bool vec_expand    (struct atom_vec *o, size_t size);
 bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
@@ -166,25 +165,8 @@ size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 									\
 	return e == NULL ? -1 : (e - o->data);				\
 }									\
-
-#define VEC_DECLARE(name) \
-	VEC_DECLARE_TYPED(name, struct name *, const struct name *)
-
-#define VEC_DECLARE_UNIT_COPY(name)					\
 									\
 static inline								\
-bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
-{									\
-	return unit_vec_copy ((const void *) s, (void *) d,		\
-			      sizeof (s->data[0]));			\
-}									\
-
-#define VEC_DECLARE_COPY(name)						\
-									\
-bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d); \
-
-#define VEC_DEFINE_COPY(name)						\
-									\
 bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
 {									\
 	size_t i;							\
@@ -204,5 +186,8 @@ no_copy:								\
 	name##_vec_fini (d);						\
 	return false;							\
 }									\
+
+#define VEC_DECLARE(name) \
+	VEC_DECLARE_TYPED(name, struct name *, const struct name *)
 
 #endif  /* CAPSA_VEC_H */

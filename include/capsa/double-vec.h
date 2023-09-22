@@ -13,6 +13,5 @@
 #include <capsa/vec.h>
 
 VEC_DECLARE_TYPED (double, double, double)
-VEC_DECLARE_UNIT_COPY (double);
 
 #endif  /* CAPSA_DOUBLE_VEC_H */
