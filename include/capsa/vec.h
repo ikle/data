@@ -116,7 +116,7 @@ bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
 		return false;						\
 									\
 	for (i = 0; i < s->count; ++i)					\
-		if (!name##_copy (s->data + i, d->data + i))		\
+		if (!name##_copy ((ctype *) s->data + i, d->data + i))	\
 			goto no_copy;					\
 									\
 	d->count = s->count;						\
