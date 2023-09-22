@@ -14,6 +14,7 @@
 
 extern const struct data_type string_type;
 
+void *string_copy_fn (const void *from);
 struct string;
 
 #endif  /* COLIBRI_DATA_STRING_H */

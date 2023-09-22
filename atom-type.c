@@ -8,8 +8,13 @@
 
 #include <data/atom.h>
 
+void *atom_copy_fn (const void *from)
+{
+	return (void *) from;
+}
+
 const struct data_type atom_type = {
-	.copy	= (copy_fn *) atom_copy,
+	.copy	= atom_copy_fn,
 	.free	= (free_fn *) atom_free,
 	.eq	= (eq_fn   *) atom_eq,
 	.hash	= (hash_fn *) atom_hash,

@@ -14,4 +14,6 @@
 
 extern const struct data_type atom_type;
 
+void *atom_copy_fn (const void *from);
+
 #endif  /* COLIBRI_DATA_ATOM_H */
