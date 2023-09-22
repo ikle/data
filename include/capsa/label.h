@@ -17,9 +17,10 @@ static inline void label_free (const char *o)
 	/* nothing */
 }
 
-static inline const char *label_copy (const char *o)
+static inline bool label_copy (const char *const *s, const char **d)
 {
-	return o;
+	*d = *s;
+	return true;
 }
 
 static inline bool label_eq (const char *o, const char *peer)

@@ -18,9 +18,10 @@ static inline void string_free (char *o)
 	free (o);
 }
 
-static inline char *string_copy (const char *o)
+static inline bool string_copy (const char *const* s, char **d)
 {
-	return strdup (o);
+	*d = strdup (*s);
+	return *d != NULL;
 }
 
 static inline bool string_eq (const char *o, const char *peer)

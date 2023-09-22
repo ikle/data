@@ -15,7 +15,7 @@
 struct atom_vec;
 
 void *unit_vec_alloc (void);
-void *unit_vec_copy (const struct atom_vec *o, size_t size);
+bool unit_vec_copy (const struct atom_vec *s, struct atom_vec *d, size_t size);
 
 bool vec_expand    (struct atom_vec *o, size_t size);
 bool vec_resize_nc (struct atom_vec *o, size_t size, size_t avail);
@@ -114,18 +114,19 @@ static inline bool name##_vec_expand (struct name##_vec *o)		\
 }									\
 									\
 static inline								\
-void name##_vec_insert (struct name##_vec *o, size_t i, ctype e)	\
+bool name##_vec_insert (struct name##_vec *o, size_t i, ctype e)	\
 {									\
 	name##_free (o->data[i]);					\
-	o->data[i] = name##_copy (e);					\
+	return name##_copy (&e, o->data + i);				\
 }									\
 									\
 static inline bool name##_vec_append (struct name##_vec *o, ctype e)	\
 {									\
-	if (o->count >= o->avail && !name##_vec_expand (o))		\
+	if ((o->count >= o->avail && !name##_vec_expand (o)) ||		\
+	    !name##_copy (&e, o->data + o->count))			\
 		return false;						\
 									\
-	o->data[o->count++] = name##_copy (e);				\
+	++o->count;							\
 	return true;							\
 }									\
 									\
@@ -172,42 +173,36 @@ size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
 #define VEC_DECLARE_UNIT_COPY(name)					\
 									\
 static inline								\
-struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
+bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
 {									\
-	return unit_vec_copy ((void *) o, sizeof (o->data[0]));		\
+	return unit_vec_copy ((const void *) s, (void *) d,		\
+			      sizeof (s->data[0]));			\
 }									\
 
 #define VEC_DECLARE_COPY(name)						\
 									\
-struct name##_vec *name##_vec_copy (const struct name##_vec *o);	\
+bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d); \
 
 #define VEC_DEFINE_COPY(name)						\
 									\
-struct name##_vec *name##_vec_copy (const struct name##_vec *o)		\
+bool name##_vec_copy (const struct name##_vec *s, struct name##_vec *d)	\
 {									\
-	struct name##_vec *copy;					\
 	size_t i;							\
 									\
-	if ((copy = name##_vec_alloc ()) == NULL)			\
-		return copy;						\
+	if ((d->data = malloc (s->avail * sizeof (s->data[0]))) == NULL)	\
+		return false;						\
 									\
-	if (!vec_resize_nc ((void *) copy, sizeof (o->data[0]), o->avail))	\
-		goto no_resize;						\
-									\
-	for (i = 0; i < o->count; ++i) {				\
-		copy->data[i] = name##_copy (o->data[i]);		\
-									\
-		if (copy->data[i] == NULL && o->data[i] != NULL)	\
+	for (i = 0; i < s->count; ++i)					\
+		if (!name##_copy (s->data + i, d->data + i))		\
 			goto no_copy;					\
-	}								\
 									\
-	copy->count = i;						\
-	return copy;							\
+	d->count = i;							\
+	d->avail = s->avail;						\
+	return true;							\
 no_copy:								\
-	copy->count = i;						\
-no_resize:								\
-	name##_vec_free (copy);						\
-	return NULL;							\
+	d->count = i;							\
+	name##_vec_fini (d);						\
+	return false;							\
 }									\
 
 #endif  /* CAPSA_VEC_H */

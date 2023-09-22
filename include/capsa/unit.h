@@ -18,9 +18,10 @@ static inline void name##_free (type o)			\
 	/* nothing */					\
 }							\
 							\
-static inline type name##_copy (ctype o)		\
+static inline bool name##_copy (ctype *s, type *d)	\
 {							\
-	return o;					\
+	*d = *s;					\
+	return true;					\
 }							\
 							\
 static inline bool name##_eq (ctype o, ctype peer)	\
