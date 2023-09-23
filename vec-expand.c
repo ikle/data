@@ -1,5 +1,5 @@
 /*
- * Capsa Dynamic Array (Vector)
+ * Capsa Dynamic Array (Vector) Resizer
  *
  * Copyright (c) 2014-2023 Alexei A. Smekalkine
  *
