@@ -26,6 +26,7 @@ static void label_vec_test (const char *list[], size_t k)
 {
 	struct label_vec v;
 	size_t i;
+	const char **e;
 
 	label_vec_init (&v);
 
@@ -39,8 +40,9 @@ static void label_vec_test (const char *list[], size_t k)
 	for (i = 0; i < v.count; ++i)
 		printf ("%zu: %s\n", i, v.data[i]);
 
-	if ((i = label_vec_search (&v, list[k])) != -1)
-		printf ("\nstring %zu '%s' found at %zu\n", k, list[k], i);
+	if ((e = label_vec_search (&v, list[k])) != NULL)
+		printf ("\nstring %zu '%s' found at %zu\n",
+			k, list[k], e - v.data);
 
 	label_vec_fini (&v);
 }
@@ -49,6 +51,7 @@ static void string_vec_test (const char *list[], size_t k)
 {
 	struct string_vec v;
 	size_t i;
+	char **e;
 
 	string_vec_init (&v);
 
@@ -62,8 +65,9 @@ static void string_vec_test (const char *list[], size_t k)
 	for (i = 0; i < v.count; ++i)
 		printf ("%zu: %s\n", i, v.data[i]);
 
-	if ((i = string_vec_search (&v, list[k])) != -1)
-		printf ("\nstring %zu '%s' found at %zu\n", k, list[k], i);
+	if ((e = string_vec_search (&v, list[k])) != NULL)
+		printf ("\nstring %zu '%s' found at %zu\n",
+			k, list[k], e - v.data);
 
 	string_vec_fini (&v);
 }
@@ -74,6 +78,7 @@ static void int_vec_test (const int list[], size_t k)
 {
 	struct int_vec v;
 	size_t i;
+	int *e;
 
 	int_vec_init (&v);
 
@@ -87,8 +92,9 @@ static void int_vec_test (const int list[], size_t k)
 	for (i = 0; i < v.count; ++i)
 		printf ("%zu: %d\n", i, v.data[i]);
 
-	if ((i = int_vec_search (&v, list[k])) != -1)
-		printf ("\ninteger %zu '%d' found at %zu\n", k, list[k], i);
+	if ((e = int_vec_search (&v, list[k])) != NULL)
+		printf ("\ninteger %zu '%d' found at %zu\n",
+			k, list[k], e - v.data);
 
 	int_vec_fini (&v);
 }

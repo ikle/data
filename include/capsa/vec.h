@@ -184,12 +184,10 @@ static inline void name##_vec_sort (struct name##_vec *o)		\
 }									\
 									\
 static inline								\
-size_t name##_vec_search (const struct name##_vec *o, ctype key)	\
+type *name##_vec_search (const struct name##_vec *o, ctype key)		\
 {									\
-	type *e = bsearch (&key, o->data, o->count,			\
-			   sizeof (o->data[0]), name##_compar);		\
-									\
-	return e == NULL ? -1 : (e - o->data);				\
+	return bsearch (&key, o->data, o->count,			\
+			sizeof (o->data[0]), name##_compar);		\
 }									\
 
 #define VEC_DECLARE(name) \
