@@ -16,7 +16,8 @@ struct atom_vec;
 
 void *unit_vec_alloc (void);
 
-bool vec_expand    (struct atom_vec *o, size_t size);
+bool vec_expand  (struct atom_vec *o, size_t size);
+bool vec_prepare (struct atom_vec *o, size_t size, size_t i);
 
 #define VEC_DECLARE_TYPED(name, type, ctype)				\
 									\
@@ -130,6 +131,11 @@ no_copy:								\
 static inline bool name##_vec_expand (struct name##_vec *o)		\
 {									\
 	return vec_expand ((void *) o, sizeof (type));			\
+}									\
+									\
+static inline bool name##_vec_prepare (struct name##_vec *o, size_t i)	\
+{									\
+	return vec_prepare ((void *) o, sizeof (type), i);		\
 }									\
 									\
 static inline								\
