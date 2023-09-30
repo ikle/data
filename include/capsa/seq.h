@@ -64,9 +64,9 @@ static inline void type##_seq_push (struct type##_seq *s,		\
 									\
 static inline struct type *type##_seq_pop (struct type##_seq *s)	\
 {									\
-	struct type *i = s->head;					\
-									\
 	assert (s != NULL);						\
+									\
+	struct type *i = s->head;					\
 									\
 	if (i == NULL)							\
 		return NULL;						\
