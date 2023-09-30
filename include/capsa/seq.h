@@ -83,6 +83,7 @@ static inline void type##_seq_enqueue (struct type##_seq *s,		\
 {									\
 	assert (s != NULL);						\
 	assert (i != NULL);						\
+	assert (i->next == NULL);					\
 									\
 	*s->tail = i;							\
 	s->tail = &i->next;						\
