@@ -26,28 +26,25 @@ static inline void type##_seq_init (struct type##_seq *s)		\
 	s->tail = &s->head;						\
 }									\
 									\
-static inline void type##_seq_fini (struct type##_seq *s,		\
-			     void (*f) (struct type *))			\
+static inline void type##_seq_fini (struct type##_seq *s)		\
 {									\
 	struct type *i, *next;						\
 									\
 	assert (s != NULL);						\
-	assert (f != NULL);						\
 									\
 	for (i = s->head; i != NULL; i = next) {			\
 		next = i->next;						\
-		f (i);							\
+		type##_free (i);					\
 	}								\
 }									\
 									\
 static inline void type##_seq_move (struct type##_seq *from,		\
-				    struct type##_seq *to,		\
-				    void (*f) (struct type *))		\
+				    struct type##_seq *to)		\
 {									\
 	assert (from != NULL);						\
 	assert (to   != NULL);						\
 									\
-	type##_seq_fini (to, f);					\
+	type##_seq_fini (to);						\
 	to->head = from->head;						\
 	to->tail = from->tail == &from->head ? &to->head : from->tail;	\
 }									\
