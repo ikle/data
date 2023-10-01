@@ -41,6 +41,13 @@ static int s_node_order (const char *key, const struct s_node *o)
 
 TREE_DECLARE (s_node)
 
+static void s_node_show (struct s_node *o, void *cookie)
+{
+	printf ("%zu = %s\n", o->index, o->key);
+}
+
+TREE_DECLARE_WALK (s_node, show)
+
 static const char *list[] = {
 	"test string #1",
 	"Lorem ipsum dolor sit amet",
@@ -84,6 +91,7 @@ int main (int argc, char *argv[])
 	else
 		s_node_free (e);
 
+	s_node_tree_show (&t, NULL);
 	s_node_tree_fini (&t);
 	return 0;
 }

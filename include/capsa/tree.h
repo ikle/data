@@ -73,4 +73,19 @@ name##_tree_lookup (struct name##_tree *o, const void *key)		\
 	return n == NULL ? NULL : container_of (n, struct name, node);	\
 }									\
 
+#define TREE_DECLARE_WALK(name, cmd)					\
+									\
+static inline void name##_node_##cmd (struct avl *node, void *cookie)	\
+{									\
+	struct name *o = container_of (node, struct name, node);	\
+									\
+	name##_##cmd (o, cookie);					\
+}									\
+									\
+static inline								\
+void name##_tree_##cmd (struct name##_tree *o, void *cookie)		\
+{									\
+	avl_walk (o->root, name##_node_##cmd, cookie);			\
+}									\
+
 #endif  /* CAPSA_TREE_H */
