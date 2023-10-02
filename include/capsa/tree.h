@@ -12,11 +12,13 @@
 #include <capsa/avl.h>
 #include <capsa/types.h>
 
-#define TREE_DECLARE(name)						\
+#define TREE_DECLARE_TYPE(name)						\
 									\
 struct name##_tree {							\
 	struct avl *root;						\
 };									\
+
+#define TREE_DECLARE_CORE(name)						\
 									\
 static inline struct avl *name##_node_alloc (const void *key)		\
 {									\
@@ -77,6 +79,10 @@ static inline size_t name##_tree_count (struct name##_tree *o)		\
 {									\
 	return avl_count (o->root);					\
 }									\
+
+#define TREE_DECLARE(name)  		\
+	TREE_DECLARE_TYPE(name)		\
+	TREE_DECLARE_CORE(name)
 
 #define TREE_DECLARE_WALK(name, cmd)					\
 									\
