@@ -23,6 +23,7 @@ typedef int avl_cmp_cb (const void *key, const struct avl *node);
 
 void avl_free (struct avl *root, avl_free_cb *free);
 void avl_walk (struct avl *root, avl_walk_cb *poke, void *cookie);
+size_t avl_count (struct avl *root);
 
 struct avl *avl_find    (struct avl **root, const void *key, avl_cmp_cb *cmp);
 struct avl *avl_find_lo (struct avl **root, const void *key, avl_cmp_cb *cmp);
