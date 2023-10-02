@@ -81,7 +81,7 @@ int main (int argc, char *argv[])
 			return 1;
 	}
 	else
-		printf ("%zu = %s\n", e->index, list[3]);
+		s_node_show (e, NULL);
 
 	if ((e = s_node_tree_remove (&t, list[3])) == NULL) {
 			fprintf (stderr, "E: tree remove failed\n");
