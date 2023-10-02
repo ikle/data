@@ -91,6 +91,7 @@ int main (int argc, char *argv[])
 	else
 		s_node_free (e);
 
+	printf ("tree cardinality = %zu\n", s_node_tree_count (&t));
 	s_node_tree_show (&t, NULL);
 	s_node_tree_fini (&t);
 	return 0;

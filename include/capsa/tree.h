@@ -72,6 +72,11 @@ name##_tree_lookup (struct name##_tree *o, const void *key)		\
 									\
 	return n == NULL ? NULL : container_of (n, struct name, node);	\
 }									\
+									\
+static inline size_t name##_tree_count (struct name##_tree *o)		\
+{									\
+	return avl_count (o->root);					\
+}									\
 
 #define TREE_DECLARE_WALK(name, cmd)					\
 									\
