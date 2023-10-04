@@ -50,6 +50,11 @@ static inline void name##_tree_fini (struct name##_tree *o)		\
 	avl_free (o->root, name##_node_free);				\
 }									\
 									\
+static inline int name##_tree_is_empty (struct name##_tree *o)		\
+{									\
+	return o->root == NULL;						\
+}									\
+									\
 static inline struct name *						\
 name##_tree_insert (struct name##_tree *o, const void *key)		\
 {									\
